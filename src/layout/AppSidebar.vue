@@ -46,8 +46,8 @@ export default {
                         label: "Networking",
                         items: [
                         { label: "Services", to: currentId.value ? { name: "ServicesOverview", params: { id: currentId.value } } : homePage },
-                            { label: "Ingresses" },
-                            { label: "Ingress Classes" },
+                        { label: "Ingresses", to: currentId.value ? { name: "IngressesOverview", params: { id: currentId.value } } : homePage },
+                        { label: "Ingress Classes", to: currentId.value ? { name: "IngressClassesOverview", params: { id: currentId.value } } : homePage },
                         ],
                     },
                     {

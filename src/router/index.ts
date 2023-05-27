@@ -5,10 +5,12 @@ import CronJobsOverview from "@/components/workloads/CronJobsOverview.vue";
 import PodsOverview from "@/components/PodsOverview.vue";
 import DeploymentsOverview from "@/components/DeploymentsOverview.vue";
 import DaemonSetsOverview from "@/components/DaemonSetsOverview.vue";
+import IngressesOverview from "@/components/networking/IngressesOverview.vue";
+import IngressClassesOverview from "@/components/networking/IngressClassesOverview.vue";
 import JobsOverview from "@/components/workloads/JobsOverview.vue";
 import ReplicaSetsOverview from "@/components/ReplicaSetsOverview.vue";
 import ReplicationControllersOverview from "@/components/workloads/ReplicationControllersOverview.vue";
-import ServicesOverview from "@/components/services/ServicesOverview.vue";
+import ServicesOverview from "@/components/networking/ServicesOverview.vue";
 import StatefulSetsOverview from "@/components/StatefulSetsOverview.vue";
 
 const routes = [
@@ -41,6 +43,16 @@ const routes = [
     path: "/daemonsets-overview/:id",
     name: "DaemonSetsOverview",
     component: DaemonSetsOverview,
+  },
+  {
+    path: "/ingresses-overview/:id",
+    name: "IngressesOverview",
+    component: IngressesOverview,
+  },
+  {
+    path: "/ingress-classes-overview/:id",
+    name: "IngressClassesOverview",
+    component: IngressClassesOverview,
   },
   {
     path: "/jobs-overview/:id",

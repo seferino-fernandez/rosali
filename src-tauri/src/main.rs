@@ -38,7 +38,9 @@ fn main() {
             get_jobs_command,
             get_cronjobs_command,
             get_replication_controllers_command,
-            get_services_command
+            get_services_command,
+            get_ingresses_command,
+            get_ingress_classes_command
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

@@ -3,6 +3,8 @@ pub mod cronjobs;
 pub mod daemonsets;
 pub mod deployments;
 pub mod event;
+pub mod ingress;
+pub mod ingress_class;
 pub mod jobs;
 pub mod pods;
 pub mod replicasets;
