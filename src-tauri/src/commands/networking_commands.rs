@@ -1,7 +1,7 @@
 use std::sync::Arc;
 use tokio::sync::Mutex;
 use tauri::{State};
-use crate::{cluster_connections::{ClusterConnections}, services::kube_networking_service};
+use crate::{cluster_connections::{ClusterConnections}, services::kube_networking_service, kube_model::{ingress::KubeIngress, ingress_class::KubeIngressClass}};
 use crate::common::common::Response;
 
 use crate::kube_model::services::KubeService;
@@ -13,4 +13,21 @@ pub async fn get_services_command(
     namespace: Option<String>,
 ) -> Result<Response<Vec<KubeService>>, ()> {
     kube_networking_service::get_services(connections, id, namespace).await
+}
+
+#[tauri::command]
+pub async fn get_ingresses_command(
+    connections: State<'_, Arc<Mutex<ClusterConnections>>>,
+    id: String,
+    namespace: Option<String>,
+) -> Result<Response<Vec<KubeIngress>>, ()> {
+    kube_networking_service::get_ingresses(connections, id, namespace).await
+}
+
+#[tauri::command]
+pub async fn get_ingress_classes_command(
+    connections: State<'_, Arc<Mutex<ClusterConnections>>>,
+    id: String,
+) -> Result<Response<Vec<KubeIngressClass>>, ()> {
+    kube_networking_service::get_ingress_classes(connections, id).await
 }

@@ -42,6 +42,18 @@ const messages = {
         loading: "Loading Daemon Sets...",
       },
     },
+    ingresses: {
+      table: {
+        no_results: "No Ingresses found.",
+        loading: "Loading Ingresses...",
+      },
+    },
+    ingress_classes: {
+      table: {
+        no_results: "No Ingress Classes found.",
+        loading: "Loading Ingress Classes...",
+      },
+    },
     jobs: {
       table: {
         no_results: "No Jobs found.",
