@@ -1,0 +1,12 @@
+pub mod base;
+pub mod cronjobs;
+pub mod daemonsets;
+pub mod deployments;
+pub mod event;
+pub mod jobs;
+pub mod pods;
+pub mod replicasets;
+pub mod replication_controllers;
+pub mod statefulsets;
+pub mod services;
+pub mod workload_status;
