@@ -1,10 +1,10 @@
 use std::sync::Arc;
 
-use tauri::{State};
+use tauri::State;
 use tokio::sync::Mutex;
 
+use crate::cluster_connections::ClusterConnections;
 use crate::common::common::Response;
-use crate::cluster_connections::{ClusterConnections};
 use crate::kube_model::ingress::KubeIngress;
 use crate::kube_model::ingress_class::KubeIngressClass;
 use crate::kube_model::services::KubeService;

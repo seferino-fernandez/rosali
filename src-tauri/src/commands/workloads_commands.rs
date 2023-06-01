@@ -1,10 +1,18 @@
 use std::sync::Arc;
-use tokio::sync::Mutex;
 use tauri::{State, Window};
+use tokio::sync::Mutex;
 
-use crate::{cluster_connections::{ClusterConnections}, kube_model::{pods::KubePod, deployments::KubeDeployment, daemonsets::KubeDaemonSet, replicasets::KubeReplicaSet, statefulsets::KubeStatefulSet, jobs::KubeJob, cronjobs::KubeCronJob, replication_controllers::KubeReplicationController, workload_status::WorkloadStatus, event::KubeEvent}, services::{kube_workloads_service, kubeconfig}};
 use crate::common::common::Response;
-
+use crate::{
+    cluster_connections::ClusterConnections,
+    kube_model::{
+        cronjobs::KubeCronJob, daemonsets::KubeDaemonSet, deployments::KubeDeployment,
+        event::KubeEvent, jobs::KubeJob, pods::KubePod, replicasets::KubeReplicaSet,
+        replication_controllers::KubeReplicationController, statefulsets::KubeStatefulSet,
+        workload_status::WorkloadStatus,
+    },
+    services::{kube_workloads_service, kubeconfig},
+};
 
 #[tauri::command]
 pub fn find_default_config_command() -> Result<Response<Vec<kubeconfig::Config>>, String> {

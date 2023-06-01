@@ -74,7 +74,6 @@ export default {
     onMounted(async () => {
       try {
         const defaultKubeConfigData = await invoke("find_default_config_command");
-        console.log(defaultKubeConfigData);
         contexts.value = defaultKubeConfigData.data;
       } catch (error) {
         console.error('Error fetching kubeconfig data:', error);
@@ -82,7 +81,6 @@ export default {
     });
 
     async function onRowClick(event, rowData) {
-      console.log(event);
       let contextName = event.data.name;
       let contextPath = event.data.path;
       let params = {};

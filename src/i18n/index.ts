@@ -30,6 +30,12 @@ const messages = {
         failed: "Failed",
       },
     },
+    configmaps: {
+      table: {
+        no_results: "No Config Maps found.",
+        loading: "Loading Config Maps...",
+      },
+    },
     cronjobs: {
       table: {
         no_results: "No Cron Jobs found.",
@@ -60,6 +66,12 @@ const messages = {
         loading: "Loading Jobs...",
       },
     },
+    persistent_volume_claims: {
+      table: {
+        no_results: "No Persistent Volumn Claims found.",
+        loading: "Loading Persistent Volumn Claims...",
+      },
+    },
     replicasets: {
       table: {
         no_results: "No Replica Sets found.",
@@ -72,6 +84,12 @@ const messages = {
         loading: "Loading Replication Controllers...",
       },
     },
+    secrets: {
+      table: {
+        no_results: "No Secrets found.",
+        loading: "Loading Secrets...",
+      },
+    },
     services: {
       table: {
         no_results: "No Services found.",
@@ -82,6 +100,12 @@ const messages = {
       table: {
         no_results: "No Stateful Sets found.",
         loading: "Loading Stateful Sets...",
+      },
+    },
+    storageclasses: {
+      table: {
+        no_results: "No Storage Classes found.",
+        loading: "Loading Storage Classes...",
       },
     },
   },
