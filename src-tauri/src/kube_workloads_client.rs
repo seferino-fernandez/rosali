@@ -1,28 +1,33 @@
-use std::str;
 use std::ops::Deref;
+use std::str;
 
-use k8s_openapi::api::batch::v1::{Job, CronJob};
-use kube::{Api, Client};
-use kube::api::{ListParams, LogParams};
-use k8s_openapi::api::core::v1::{ Pod, Event, ReplicationController};
-use k8s_openapi::api::apps::v1::{Deployment, ReplicaSet, DaemonSet, StatefulSet};
 use crate::kube_model::cronjobs::KubeCronJob;
+use crate::kube_model::daemonsets::KubeDaemonSet;
 use crate::kube_model::deployments::KubeDeployment;
 use crate::kube_model::event::KubeEvent;
 use crate::kube_model::jobs::KubeJob;
+use crate::kube_model::pods::KubePod;
+use crate::kube_model::replicasets::KubeReplicaSet;
 use crate::kube_model::replication_controllers::KubeReplicationController;
-use crate::kube_model::pods::{KubePod};
-use crate::kube_model::workload_status::{WorkloadStatus, DeploymentStatus, PodStatus, ReplicaStatus};
-use futures::{TryStreamExt};
-use tauri::Window;
+use crate::kube_model::statefulsets::KubeStatefulSet;
+use crate::kube_model::workload_status::{
+    DeploymentStatus, PodStatus, ReplicaStatus, WorkloadStatus,
+};
+use futures::TryStreamExt;
+use k8s_openapi::api::apps::v1::{DaemonSet, Deployment, ReplicaSet, StatefulSet};
+use k8s_openapi::api::batch::v1::{CronJob, Job};
+use k8s_openapi::api::core::v1::{Event, Pod, ReplicationController};
+use kube::api::{ListParams, LogParams};
+use kube::{Api, Client};
 use std::sync::{Arc, Mutex};
 use std::time::Duration;
+use tauri::Window;
 use tokio::task;
-use crate::kube_model::statefulsets::KubeStatefulSet;
-use crate::kube_model::daemonsets::KubeDaemonSet; 
-use crate::kube_model::replicasets::KubeReplicaSet;
 
-pub async fn get_pods(client: &Client, namespace: Option<String>,) -> Result<Vec<KubePod>, kube::Error> {
+pub async fn get_pods(
+    client: &Client,
+    namespace: Option<String>,
+) -> Result<Vec<KubePod>, kube::Error> {
     let pods_api: Api<Pod> = match namespace {
         Some(namespace) => Api::namespaced(client.clone(), namespace.deref()),
         None => Api::all(client.clone()),
@@ -82,7 +87,7 @@ pub async fn get_workload_status(
         let desired = spec.replicas.unwrap_or(0);
         let current = status.replicas;
         let ready = status.ready_replicas.unwrap_or(0);
-    
+
         if desired == current && current == ready {
             replica_running += 1;
         } else if desired > 0 && (current < desired || ready < desired) {
@@ -106,8 +111,10 @@ pub async fn get_workload_status(
     })
 }
 
-pub async fn get_recent_events(client: &kube::Client, namespace: Option<String>) -> Result<Vec<KubeEvent>, Box<dyn std::error::Error>> {
-
+pub async fn get_recent_events(
+    client: &kube::Client,
+    namespace: Option<String>,
+) -> Result<Vec<KubeEvent>, Box<dyn std::error::Error>> {
     let namespace = namespace.unwrap_or_else(|| String::from("default"));
     let events_api: Api<Event> = Api::namespaced(client.clone(), &namespace);
     let lp = ListParams::default().timeout(30);
@@ -117,7 +124,11 @@ pub async fn get_recent_events(client: &kube::Client, namespace: Option<String>)
 
     for event in events {
         let formatted_source = if let Some(source) = event.source {
-            format!("{} {}", source.host.unwrap_or_default(), source.component.unwrap_or_default())
+            format!(
+                "{} {}",
+                source.host.unwrap_or_default(),
+                source.component.unwrap_or_default()
+            )
         } else {
             String::new()
         };
@@ -131,8 +142,12 @@ pub async fn get_recent_events(client: &kube::Client, namespace: Option<String>)
             source: Some(formatted_source),
             reporting_component: event.reporting_component,
             count: event.count.unwrap_or(0),
-            first_time: event.first_timestamp.map(|timestamp| timestamp.0.to_rfc3339()),
-            last_time: event.last_timestamp.map(|timestamp| timestamp.0.to_rfc3339()),
+            first_time: event
+                .first_timestamp
+                .map(|timestamp| timestamp.0.to_rfc3339()),
+            last_time: event
+                .last_timestamp
+                .map(|timestamp| timestamp.0.to_rfc3339()),
         };
         recent_events.push(kube_event);
     }
@@ -157,7 +172,7 @@ pub async fn stream_pod_logs(
         timestamps: true,
         since_seconds: None,
         limit_bytes: None,
-        pretty: true
+        pretty: true,
     };
 
     let log_stream = pods_api.log_stream(pod_name, &log_params).await?;
@@ -171,7 +186,11 @@ pub async fn stream_pod_logs(
                 async move {
                     if !line.is_empty() {
                         let line_str = str::from_utf8(&line).unwrap();
-                        window.lock().unwrap().emit("log_line", Some(line_str)).expect("Failed to emit log line");
+                        window
+                            .lock()
+                            .unwrap()
+                            .emit("log_line", Some(line_str))
+                            .expect("Failed to emit log line");
                     }
                     // Add a small sleep to prevent high CPU usage due to the loop
                     tokio::time::sleep(Duration::from_millis(50)).await;
@@ -185,7 +204,10 @@ pub async fn stream_pod_logs(
     Ok(())
 }
 
-pub async fn get_deployments(client: &Client, namespace: Option<String>,) -> Result<Vec<KubeDeployment>, kube::Error> {
+pub async fn get_deployments(
+    client: &Client,
+    namespace: Option<String>,
+) -> Result<Vec<KubeDeployment>, kube::Error> {
     let deployments_api: Api<Deployment> = match namespace {
         Some(namespace) => Api::namespaced(client.clone(), namespace.deref()),
         None => Api::all(client.clone()),
@@ -195,8 +217,8 @@ pub async fn get_deployments(client: &Client, namespace: Option<String>,) -> Res
 }
 
 pub async fn restart_deployment(
-    client: &Client, 
-    namespace: Option<String>, 
+    client: &Client,
+    namespace: Option<String>,
     name: &str,
 ) -> Result<KubeDeployment, kube::Error> {
     let namespace = namespace.unwrap_or_else(|| String::from("default"));
@@ -205,16 +227,25 @@ pub async fn restart_deployment(
     Ok(KubeDeployment::from(deployment))
 }
 
-pub async fn get_statefulsets(client: &Client, namespace: Option<String>,) -> Result<Vec<KubeStatefulSet>, kube::Error> {
+pub async fn get_statefulsets(
+    client: &Client,
+    namespace: Option<String>,
+) -> Result<Vec<KubeStatefulSet>, kube::Error> {
     let statefulsets_api: Api<StatefulSet> = match namespace {
         Some(namespace) => Api::namespaced(client.clone(), namespace.deref()),
         None => Api::all(client.clone()),
     };
     let statefulsets = statefulsets_api.list(&ListParams::default()).await?;
-    Ok(statefulsets.into_iter().map(KubeStatefulSet::from).collect())
+    Ok(statefulsets
+        .into_iter()
+        .map(KubeStatefulSet::from)
+        .collect())
 }
 
-pub async fn get_daemonsets(client: &Client, namespace: Option<String>,) -> Result<Vec<KubeDaemonSet>, kube::Error> {
+pub async fn get_daemonsets(
+    client: &Client,
+    namespace: Option<String>,
+) -> Result<Vec<KubeDaemonSet>, kube::Error> {
     let daemonsets_api: Api<DaemonSet> = match namespace {
         Some(namespace) => Api::namespaced(client.clone(), namespace.deref()),
         None => Api::all(client.clone()),
@@ -223,7 +254,10 @@ pub async fn get_daemonsets(client: &Client, namespace: Option<String>,) -> Resu
     Ok(daemonsets.into_iter().map(KubeDaemonSet::from).collect())
 }
 
-pub async fn get_replicasets(client: &Client, namespace: Option<String>,) -> Result<Vec<KubeReplicaSet>, kube::Error> {
+pub async fn get_replicasets(
+    client: &Client,
+    namespace: Option<String>,
+) -> Result<Vec<KubeReplicaSet>, kube::Error> {
     let replicasets_api: Api<ReplicaSet> = match namespace {
         Some(namespace) => Api::namespaced(client.clone(), namespace.deref()),
         None => Api::all(client.clone()),
@@ -232,7 +266,10 @@ pub async fn get_replicasets(client: &Client, namespace: Option<String>,) -> Res
     Ok(replicasets.into_iter().map(KubeReplicaSet::from).collect())
 }
 
-pub async fn get_jobs(client: &Client, namespace: Option<String>,) -> Result<Vec<KubeJob>, kube::Error> {
+pub async fn get_jobs(
+    client: &Client,
+    namespace: Option<String>,
+) -> Result<Vec<KubeJob>, kube::Error> {
     let jobs_api: Api<Job> = match namespace {
         Some(namespace) => Api::namespaced(client.clone(), namespace.deref()),
         None => Api::all(client.clone()),
@@ -241,7 +278,10 @@ pub async fn get_jobs(client: &Client, namespace: Option<String>,) -> Result<Vec
     Ok(jobs.into_iter().map(KubeJob::from).collect())
 }
 
-pub async fn get_cronjobs(client: &Client, namespace: Option<String>,) -> Result<Vec<KubeCronJob>, kube::Error> {
+pub async fn get_cronjobs(
+    client: &Client,
+    namespace: Option<String>,
+) -> Result<Vec<KubeCronJob>, kube::Error> {
     let cronjobs_api: Api<CronJob> = match namespace {
         Some(namespace) => Api::namespaced(client.clone(), namespace.deref()),
         None => Api::all(client.clone()),
@@ -250,12 +290,19 @@ pub async fn get_cronjobs(client: &Client, namespace: Option<String>,) -> Result
     Ok(cronjobs.into_iter().map(KubeCronJob::from).collect())
 }
 
-pub async fn get_replication_controllers(client: &Client, namespace: Option<String>,) -> Result<Vec<KubeReplicationController>, kube::Error> {
+pub async fn get_replication_controllers(
+    client: &Client,
+    namespace: Option<String>,
+) -> Result<Vec<KubeReplicationController>, kube::Error> {
     let replication_controllers_api: Api<ReplicationController> = match namespace {
         Some(namespace) => Api::namespaced(client.clone(), namespace.deref()),
         None => Api::all(client.clone()),
     };
-    let replication_controllers = replication_controllers_api.list(&ListParams::default()).await?;
-    Ok(replication_controllers.into_iter().map(KubeReplicationController::from).collect())
+    let replication_controllers = replication_controllers_api
+        .list(&ListParams::default())
+        .await?;
+    Ok(replication_controllers
+        .into_iter()
+        .map(KubeReplicationController::from)
+        .collect())
 }
-

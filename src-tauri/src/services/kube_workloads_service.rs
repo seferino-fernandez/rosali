@@ -5,18 +5,18 @@ use tauri::{State, Window};
 use tokio::sync::Mutex;
 use uuid::Uuid;
 
-use crate::cluster_connections::{ClusterConnections, ClusterConnection};
-use crate::kube_model::event::KubeEvent;
-use crate::kube_model::workload_status::WorkloadStatus;
+use crate::cluster_connections::{ClusterConnection, ClusterConnections};
+use crate::common::common::Response;
 use crate::kube_model::cronjobs::KubeCronJob;
 use crate::kube_model::daemonsets::KubeDaemonSet;
 use crate::kube_model::deployments::KubeDeployment;
+use crate::kube_model::event::KubeEvent;
 use crate::kube_model::jobs::KubeJob;
+use crate::kube_model::pods::KubePod;
 use crate::kube_model::replicasets::KubeReplicaSet;
 use crate::kube_model::replication_controllers::KubeReplicationController;
 use crate::kube_model::statefulsets::KubeStatefulSet;
-use crate::kube_model::pods::{KubePod};
-use crate::common::common::Response;
+use crate::kube_model::workload_status::WorkloadStatus;
 
 use super::kubeconfig::{self, find_kubeconfig_for_context};
 
@@ -71,8 +71,8 @@ pub async fn add_cluster_connection(
     context_name: String,
     context_path: Option<String>,
 ) -> Result<Response<String>, ()> {
-    let kubeconfig_path = context_path.unwrap_or_else(|| {
-        match find_kubeconfig_for_context(&context_name) {
+    let kubeconfig_path =
+        context_path.unwrap_or_else(|| match find_kubeconfig_for_context(&context_name) {
             Ok(path) => path,
             Err(e) => {
                 return format!(
@@ -80,8 +80,7 @@ pub async fn add_cluster_connection(
                     context_name, e
                 )
             }
-        }
-    });
+        });
 
     match add_cluster_to_connections(&connections, &context_name, &kubeconfig_path).await {
         Ok(connection_id) => Ok(Response {
@@ -122,10 +121,7 @@ async fn add_cluster_to_connections(
 
     let connection_id = Uuid::new_v4().to_string();
     println!("Generated connection_id: {}", connection_id);
-    let connection = ClusterConnection::new(
-        connection_id.clone(),
-        client,
-    );
+    let connection = ClusterConnection::new(connection_id.clone(), client);
 
     connections.lock().await.add_connection(connection);
     Ok(connection_id)
@@ -204,7 +200,8 @@ pub async fn get_pods(
     connections: State<'_, Arc<Mutex<ClusterConnections>>>,
     id: String,
     namespace: Option<String>,
-) -> Result<Response<Vec<KubePod>>, ()> { // Replace CustomResource with KubePod
+) -> Result<Response<Vec<KubePod>>, ()> {
+    // Replace CustomResource with KubePod
     let connections_locked = connections.lock().await;
     let connection = match connections_locked.get_connection(&id) {
         Some(conn) => conn,
@@ -236,13 +233,18 @@ pub async fn stream_pod_logs(
     let connection = match connections_locked.get_connection(&id) {
         Some(conn) => conn,
         None => {
-            return Ok(Response::<String>::error(
-                "Cluster not found".to_string(),
-            ));
+            return Ok(Response::<String>::error("Cluster not found".to_string()));
         }
     };
 
-    match crate::kube_workloads_client::stream_pod_logs(&connection.client(), namespace, &pod_name, window).await {
+    match crate::kube_workloads_client::stream_pod_logs(
+        &connection.client(),
+        namespace,
+        &pod_name,
+        window,
+    )
+    .await
+    {
         Ok(()) => Ok(Response {
             success: true,
             data: None,
@@ -292,7 +294,9 @@ pub async fn restart_deployment(
             ));
         }
     };
-    match crate::kube_workloads_client::restart_deployment(&connection.client(), namespace, &name).await {
+    match crate::kube_workloads_client::restart_deployment(&connection.client(), namespace, &name)
+        .await
+    {
         Ok(kube_deployment) => Ok(Response::<KubeDeployment>::success(kube_deployment)),
         Err(e) => Ok(Response::<KubeDeployment>::error(e.to_string())),
     }
@@ -438,12 +442,16 @@ pub async fn get_replication_controllers(
         }
     };
 
-    match crate::kube_workloads_client::get_replication_controllers(&connection.client(), namespace).await {
+    match crate::kube_workloads_client::get_replication_controllers(&connection.client(), namespace)
+        .await
+    {
         Ok(jobs) => Ok(Response {
             success: true,
             data: Some(jobs),
             error: None,
         }),
-        Err(e) => Ok(Response::<Vec<KubeReplicationController>>::error(e.to_string())),
+        Err(e) => Ok(Response::<Vec<KubeReplicationController>>::error(
+            e.to_string(),
+        )),
     }
 }

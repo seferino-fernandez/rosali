@@ -43,7 +43,6 @@ export default {
 
         onMounted(async () => {
             event.listen("log_line", (event) => {
-                console.log("Received event for log_line:", event);
                 if (event.payload !== null && podLogTabs.value.length > 0) {
                     podLogTabs.value[activeTabIndex.value].logs += event.payload;
                 }
@@ -52,13 +51,10 @@ export default {
 
         const streamLogs = async () => {
             if (!selectedPod.value.name || !connectionId.value) {
-                console.log("Not streaming logs");
                 return;
             }
-            console.log("streamLogs function executing for:", selectedPod.value.name);
 
             logs.value = ""; // Clear the previous logs
-            console.log(selectedPod.value);
             await invoke("stream_pod_logs_command", {
                 id: connectionId.value,
                 namespace: selectedPod.value.namespace,

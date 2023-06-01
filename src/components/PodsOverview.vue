@@ -60,18 +60,11 @@ export default {
         });
 
         const fetchPods = async () => {
-            console.log(clusterConnectionId.value);
             const response = await invoke("get_pods_command", { id: clusterConnectionId.value });
-            console.log(response);
             pods.value = response.data;
         };
 
         const viewLogs = async () => {
-            console.log('viewLogs called');
-            console.log('Emitting view-logs event:', {
-                connectionId: clusterConnectionId.value,
-                pod: selectedPod.value,
-            });
             showDetails.value = false;
             emit('view-logs', {
                 connectionId: clusterConnectionId.value,
@@ -80,7 +73,6 @@ export default {
         };
 
         const onRowClick = (e) => {
-            console.log(e);
             selectedPod.value = e.data;
             showDetails.value = true;
         };

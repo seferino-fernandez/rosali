@@ -1,9 +1,9 @@
-use std::env;
 use dirs::home_dir;
-use std::fs;
 use kube::config::Kubeconfig;
-use serde::{Serialize};
+use serde::Serialize;
 use serde_yaml;
+use std::env;
+use std::fs;
 
 #[derive(Clone, Debug, Serialize)]
 pub struct Config {
@@ -34,8 +34,9 @@ pub fn find_default_kubeconfig() -> Option<String> {
 
 // Parses a kubeconfig file from a given path
 pub fn parse_kubeconfig(path: &str) -> Result<Kubeconfig, Box<dyn std::error::Error>> {
-    let contents = fs::read_to_string(path)
-        .map_err(|err: std::io::Error| format!("Failed to read kubeconfig file at {}: {}", path, err))?;
+    let contents = fs::read_to_string(path).map_err(|err: std::io::Error| {
+        format!("Failed to read kubeconfig file at {}: {}", path, err)
+    })?;
     let kubeconfig: Kubeconfig = serde_yaml::from_str(&contents)
         .map_err(|err| format!("Failed to parse kubeconfig file at {}: {}", path, err))?;
     Ok(kubeconfig)
@@ -59,8 +60,7 @@ pub fn find_kubeconfig_for_context(context_name: &str) -> Result<String, String>
 }
 
 pub fn get_default_kubeconfig() -> Result<Kubeconfig, Box<dyn std::error::Error>> {
-    let path = find_default_kubeconfig()
-        .ok_or("Unable to find default kubeconfig")?;
+    let path = find_default_kubeconfig().ok_or("Unable to find default kubeconfig")?;
     let kubeconfig = parse_kubeconfig(&path)?;
     Ok(kubeconfig)
 }

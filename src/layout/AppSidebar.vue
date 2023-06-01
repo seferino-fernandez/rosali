@@ -53,10 +53,10 @@ export default {
                     {
                         label: "Config and Storage",
                         items: [
-                            { label: "Config Maps" },
-                            { label: "Secrets" },
-                            { label: "Persistent Volume Claims" },
-                            { label: "Storage Classes" },
+                        { label: "Config Maps", to: currentId.value ? { name: "ConfigMapsOverview", params: { id: currentId.value } } : homePage },
+                        { label: "Secrets", to: currentId.value ? { name: "SecretsOverview", params: { id: currentId.value } } : homePage },
+                        { label: "Persistent Volumn Claims", to: currentId.value ? { name: "PersistentVolumnClaimsOverview", params: { id: currentId.value } } : homePage },
+                        { label: "Storage Classes", to: currentId.value ? { name: "StorageClassesOverview", params: { id: currentId.value } } : homePage },
                         ],
                     },
                     {

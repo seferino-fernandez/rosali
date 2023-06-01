@@ -1,4 +1,4 @@
-use k8s_openapi::api::apps::v1::{DeploymentSpec, Deployment};
+use k8s_openapi::api::apps::v1::{Deployment, DeploymentSpec};
 use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
@@ -21,7 +21,10 @@ impl From<Deployment> for KubeDeployment {
     fn from(deployment: Deployment) -> Self {
         Self {
             name: deployment.metadata.name.unwrap_or_else(|| String::from("")),
-            namespace: deployment.metadata.namespace.unwrap_or_else(|| String::from("")),
+            namespace: deployment
+                .metadata
+                .namespace
+                .unwrap_or_else(|| String::from("")),
             spec: deployment.spec,
             status: deployment.status.map(|status| DeploymentStatus {
                 replicas: status.replicas,

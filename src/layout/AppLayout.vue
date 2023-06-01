@@ -62,7 +62,6 @@ export default {
     }
 
     const onViewLogs = async ({ connectionId: connId, pod }) => {
-      console.log("Received view-logs event:", { connectionId: connId, pod });
       connectionId.value = connId;
       selectedPod.value = pod;
       showBottomBar.value = true;

@@ -65,12 +65,9 @@ export default {
 
         onMounted(async () => {
             try {
-                console.log(clusterConnectionId.value);
                 const response = await invoke("get_context_overview", { id: clusterConnectionId.value });
-                console.log(response.data);
                 let clusterStatusOverview = response.data;
                 const recentEventsResponse = await invoke("get_recent_events_command", { id: clusterConnectionId.value });
-                console.log(recentEventsResponse);
                 if (recentEventsResponse == null || recentEventsResponse.data == null) {
                     return;
                 }

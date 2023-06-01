@@ -44,14 +44,11 @@ export default {
         });
 
         const fetchDeployments = async () => {
-            console.log(clusterConnectionId.value);
             const response = await invoke("get_deployments_command", { id: clusterConnectionId.value });
-            console.log(response);
             deployments.value = response.data;
         };
 
         const onRowClick = (e) => {
-            console.log(e);
             selectedDeployment.value = e.data;
         };
 

@@ -1,5 +1,5 @@
-use std::collections::HashMap;
 use kube::Client;
+use std::collections::HashMap;
 
 pub struct ClusterConnection {
     id: String,
@@ -49,4 +49,3 @@ impl ClusterConnections {
         self.connections.get(id)
     }
 }
-

@@ -1,6 +1,7 @@
 import { createRouter, createMemoryHistory } from "vue-router";
 import KubeconfigContexts from "@/components/KubeconfigContexts.vue";
 import ClusterOverview from "@/components/ClusterOverview.vue";
+import ConfigMapsOverview from "@/components/config_storage/ConfigMapsOverview.vue";
 import CronJobsOverview from "@/components/workloads/CronJobsOverview.vue";
 import PodsOverview from "@/components/PodsOverview.vue";
 import DeploymentsOverview from "@/components/DeploymentsOverview.vue";
@@ -8,16 +9,24 @@ import DaemonSetsOverview from "@/components/DaemonSetsOverview.vue";
 import IngressesOverview from "@/components/networking/IngressesOverview.vue";
 import IngressClassesOverview from "@/components/networking/IngressClassesOverview.vue";
 import JobsOverview from "@/components/workloads/JobsOverview.vue";
+import PersistentVolumnClaimsOverview from "@/components/config_storage/PersistentVolumnClaimsOverview.vue";
 import ReplicaSetsOverview from "@/components/ReplicaSetsOverview.vue";
 import ReplicationControllersOverview from "@/components/workloads/ReplicationControllersOverview.vue";
+import SecretsOverview from "@/components/config_storage/SecretsOverview.vue";
 import ServicesOverview from "@/components/networking/ServicesOverview.vue";
 import StatefulSetsOverview from "@/components/StatefulSetsOverview.vue";
+import StorageClassesOverview from "@/components/config_storage/StorageClassesOverview.vue";
 
 const routes = [
   {
     path: "/",
     component: KubeconfigContexts,
     name: "KubeconfigContexts",
+  },
+  {
+    path: "/configmaps-overview/:id",
+    name: "ConfigMapsOverview",
+    component: ConfigMapsOverview,
   },
   {
     path: "/cluster-overview/:id",
@@ -60,6 +69,11 @@ const routes = [
     component: JobsOverview,
   },
   {
+    path: "/persistent-volumn-claims-overview/:id",
+    name: "PersistentVolumnClaimsOverview",
+    component: PersistentVolumnClaimsOverview,
+  },
+  {
     path: "/replicasets-overview/:id",
     name: "ReplicaSetsOverview",
     component: ReplicaSetsOverview,
@@ -70,6 +84,11 @@ const routes = [
     component: ReplicationControllersOverview,
   },
   {
+    path: "/secrets-overview/:id",
+    name: "SecretsOverview",
+    component: SecretsOverview,
+  },
+  {
     path: "/services-overview/:id",
     name: "ServicesOverview",
     component: ServicesOverview,
@@ -78,6 +97,11 @@ const routes = [
     path: "/statefulsets-overview/:id",
     name: "StatefulSetsOverview",
     component: StatefulSetsOverview,
+  },
+  {
+    path: "/storage-classes-overview/:id",
+    name: "StorageClassesOverview",
+    component: StorageClassesOverview,
   },
 ];
 

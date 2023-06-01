@@ -59,7 +59,6 @@ export default {
 
             if (tabIndex > -1) {
                 const removeConnectionResponse = await invoke("remove_cluster_connection", { id: tab.id });
-                console.log(removeConnectionResponse);
                 props.tabs.splice(tabIndex, 1);
                 if (tabIndex <= 0) {
                     goToKubeconfigContexts();
