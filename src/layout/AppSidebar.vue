@@ -1,5 +1,5 @@
 <template>
-    <div class="layout-sidebar" >
+    <div class="layout-sidebar">
         <PanelMenu class=".sidebar-items" :model="items" @item-click="navigateTo" />
     </div>
 </template>
@@ -45,28 +45,37 @@ export default {
                     {
                         label: "Networking",
                         items: [
-                        { label: "Services", to: currentId.value ? { name: "ServicesOverview", params: { id: currentId.value } } : homePage },
-                        { label: "Ingresses", to: currentId.value ? { name: "IngressesOverview", params: { id: currentId.value } } : homePage },
-                        { label: "Ingress Classes", to: currentId.value ? { name: "IngressClassesOverview", params: { id: currentId.value } } : homePage },
+                            { label: "Services", to: currentId.value ? { name: "ServicesOverview", params: { id: currentId.value } } : homePage },
+                            { label: "Endpoints" },
+                            { label: "Ingresses", to: currentId.value ? { name: "IngressesOverview", params: { id: currentId.value } } : homePage },
+                            { label: "Ingress Classes", to: currentId.value ? { name: "IngressClassesOverview", params: { id: currentId.value } } : homePage },
+                            { label: "Network Polices" },
                         ],
                     },
                     {
                         label: "Config and Storage",
                         items: [
-                        { label: "Config Maps", to: currentId.value ? { name: "ConfigMapsOverview", params: { id: currentId.value } } : homePage },
-                        { label: "Secrets", to: currentId.value ? { name: "SecretsOverview", params: { id: currentId.value } } : homePage },
-                        { label: "Persistent Volumn Claims", to: currentId.value ? { name: "PersistentVolumnClaimsOverview", params: { id: currentId.value } } : homePage },
-                        { label: "Storage Classes", to: currentId.value ? { name: "StorageClassesOverview", params: { id: currentId.value } } : homePage },
+                            { label: "Config Maps", to: currentId.value ? { name: "ConfigMapsOverview", params: { id: currentId.value } } : homePage },
+                            { label: "Secrets", to: currentId.value ? { name: "SecretsOverview", params: { id: currentId.value } } : homePage },
+                            { label: "Persistent Volumn Claims", to: currentId.value ? { name: "PersistentVolumnClaimsOverview", params: { id: currentId.value } } : homePage },
+                            { label: "Storage Classes", to: currentId.value ? { name: "StorageClassesOverview", params: { id: currentId.value } } : homePage },
                         ],
                     },
                     {
                         label: "Cluster",
                         items: [
-                            { label: "Cluster Roles & Bindings" },
-                            { label: "Service Accounts" },
                             { label: "Namespaces" },
                             { label: "Nodes" },
-                            { label: "Network Polices" },
+                            { label: "Service Accounts" },
+                        ],
+                    },
+                    {
+                        label: "Access Control",
+                        items: [
+                            { label: "Cluster Roles", to: currentId.value ? { name: "ClusterRolesOverview", params: { id: currentId.value } } : homePage },
+                            { label: "Cluster Role Bindings", to: currentId.value ? { name: "ClusterRoleBindingsOverview", params: { id: currentId.value } } : homePage },
+                            { label: "Roles", to: currentId.value ? { name: "RolesOverview", params: { id: currentId.value } } : homePage },
+                            { label: "Role Bindings", to: currentId.value ? { name: "RoleBindingsOverview", params: { id: currentId.value } } : homePage },
                         ],
                     },
                 ];

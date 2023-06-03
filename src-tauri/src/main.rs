@@ -15,6 +15,7 @@ mod kube_workloads_client;
 mod services;
 
 use crate::cluster_connections::ClusterConnections;
+use crate::commands::access_control_commands::*;
 use crate::commands::config_storage_commands::*;
 use crate::commands::networking_commands::*;
 use crate::commands::workloads_commands::*;
@@ -47,6 +48,10 @@ fn main() {
             get_secrets_command,
             get_persistent_volumn_claims_command,
             get_storage_classes_command,
+            get_clusterroles_command,
+            get_clusterrole_bindings_command,
+            get_roles_command,
+            get_role_bindings_command,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

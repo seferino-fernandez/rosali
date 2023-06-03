@@ -40,27 +40,41 @@ pub fn to_age_secs(timestamp: Option<&Time>, against: DateTime<Utc>) -> String {
 
 pub fn duration_to_age(duration: Duration, with_secs: bool) -> String {
     let mut out = String::new();
-    if duration.num_weeks() != 0 {
-        out.push_str(format!("{}w", duration.num_weeks()).as_str());
+
+    let weeks = duration.num_weeks();
+    let mut remaining_duration = duration - Duration::weeks(weeks);
+
+    if weeks != 0 {
+        out.push_str(&format!("{}w", weeks));
     }
-    let days = duration.num_days() - (duration.num_weeks() * 7);
+
+    let days: i64 = remaining_duration.num_days();
+    remaining_duration = remaining_duration - Duration::days(days);
+
     if days != 0 {
-        out.push_str(format!("{}d", days).as_str());
+        out.push_str(&format!("{}d", days));
     }
-    let hrs = duration.num_hours() - (duration.num_days() * 24);
+
+    let hrs = remaining_duration.num_hours();
+    remaining_duration = remaining_duration - Duration::hours(hrs);
+
     if hrs != 0 {
-        out.push_str(format!("{}h", hrs).as_str());
+        out.push_str(&format!("{}h", hrs));
     }
-    let mins = duration.num_minutes() - (duration.num_hours() * 60);
-    if mins != 0 && days == 0 && duration.num_weeks() == 0 {
-        out.push_str(format!("{}m", mins).as_str());
+
+    let mins = remaining_duration.num_minutes();
+
+    if mins != 0 && days == 0 && weeks == 0 {
+        out.push_str(&format!("{}m", mins));
     }
+
     if with_secs {
-        let secs = duration.num_seconds() - (duration.num_minutes() * 60);
-        if secs != 0 && hrs == 0 && days == 0 && duration.num_weeks() == 0 {
-            out.push_str(format!("{}s", secs).as_str());
+        let secs = remaining_duration.num_seconds() - (mins * 60);
+        if secs != 0 && hrs == 0 && days == 0 && weeks == 0 {
+            out.push_str(&format!("{}s", secs));
         }
     }
+
     if out.is_empty() && with_secs {
         "0s".into()
     } else if out.is_empty() {

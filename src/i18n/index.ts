@@ -30,6 +30,18 @@ const messages = {
         failed: "Failed",
       },
     },
+    clusterroles: {
+      table: {
+        no_results: "No Cluster Roles found.",
+        loading: "Loading Cluster Roles...",
+      },
+    },
+    clusterrolebindings: {
+      table: {
+        no_results: "No Cluster Role Bindings found.",
+        loading: "Loading Cluster Role Bindings...",
+      },
+    },
     configmaps: {
       table: {
         no_results: "No Config Maps found.",
@@ -82,6 +94,18 @@ const messages = {
       table: {
         no_results: "No Replication Controllers found.",
         loading: "Loading Replication Controllers...",
+      },
+    },
+    roles: {
+      table: {
+        no_results: "No Roles found.",
+        loading: "Loading Cluster Roles...",
+      },
+    },
+    rolebindings: {
+      table: {
+        no_results: "No Role Bindings found.",
+        loading: "Loading Cluster Role Bindings...",
       },
     },
     secrets: {
