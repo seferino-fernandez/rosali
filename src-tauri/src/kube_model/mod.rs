@@ -1,4 +1,6 @@
 pub mod base;
+pub mod clusterrolebindings;
+pub mod clusterroles;
 pub mod configmap;
 pub mod cronjobs;
 pub mod daemonsets;
@@ -11,6 +13,8 @@ pub mod persistent_volumn_claims;
 pub mod pods;
 pub mod replicasets;
 pub mod replication_controllers;
+pub mod rolebindings;
+pub mod roles;
 pub mod secrets;
 pub mod services;
 pub mod statefulsets;

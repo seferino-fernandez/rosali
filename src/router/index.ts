@@ -1,6 +1,8 @@
 import { createRouter, createMemoryHistory } from "vue-router";
 import KubeconfigContexts from "@/components/KubeconfigContexts.vue";
 import ClusterOverview from "@/components/ClusterOverview.vue";
+import ClusterRolesOverview from "@/components/access_control/ClusterRolesOverview.vue";
+import ClusterRoleBindingsOverview from "@/components/access_control/ClusterRoleBindingsOverview.vue";
 import ConfigMapsOverview from "@/components/config_storage/ConfigMapsOverview.vue";
 import CronJobsOverview from "@/components/workloads/CronJobsOverview.vue";
 import PodsOverview from "@/components/PodsOverview.vue";
@@ -12,6 +14,8 @@ import JobsOverview from "@/components/workloads/JobsOverview.vue";
 import PersistentVolumnClaimsOverview from "@/components/config_storage/PersistentVolumnClaimsOverview.vue";
 import ReplicaSetsOverview from "@/components/ReplicaSetsOverview.vue";
 import ReplicationControllersOverview from "@/components/workloads/ReplicationControllersOverview.vue";
+import RolesOverview from "@/components/access_control/RolesOverview.vue";
+import RoleBindingsOverview from "@/components/access_control/RoleBindingsOverview.vue";
 import SecretsOverview from "@/components/config_storage/SecretsOverview.vue";
 import ServicesOverview from "@/components/networking/ServicesOverview.vue";
 import StatefulSetsOverview from "@/components/StatefulSetsOverview.vue";
@@ -32,6 +36,16 @@ const routes = [
     path: "/cluster-overview/:id",
     name: "ClusterOverview",
     component: ClusterOverview,
+  },
+  {
+    path: "/clusterroles-overview/:id",
+    name: "ClusterRolesOverview",
+    component: ClusterRolesOverview,
+  },
+  {
+    path: "/clusterrolebindings-overview/:id",
+    name: "ClusterRoleBindingsOverview",
+    component: ClusterRoleBindingsOverview,
   },
   {
     path: "/cronjobs-overview/:id",
@@ -84,6 +98,16 @@ const routes = [
     component: ReplicationControllersOverview,
   },
   {
+    path: "/roles-overview/:id",
+    name: "RolesOverview",
+    component: RolesOverview,
+  },
+  {
+    path: "/rolebindings-overview/:id",
+    name: "RoleBindingsOverview",
+    component: RoleBindingsOverview,
+  },
+  {
     path: "/secrets-overview/:id",
     name: "SecretsOverview",
     component: SecretsOverview,
@@ -112,7 +136,7 @@ const router = createRouter({
 
 // Add this beforeEach hook
 router.beforeEach((to, from, next) => {
-  if ((to.name !== "KubeconfigContexts") && !to.params.id) {
+  if (to.name !== "KubeconfigContexts" && !to.params.id) {
     next({ name: "KubeconfigContexts" });
   } else {
     next();
