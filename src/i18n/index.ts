@@ -78,6 +78,18 @@ const messages = {
         loading: "Loading Jobs...",
       },
     },
+    namespaces: {
+      table: {
+        no_results: "No Namespaces found.",
+        loading: "Loading Namespaces...",
+      },
+    },
+    nodes: {
+      table: {
+        no_results: "No Nodes found.",
+        loading: "Loading Nodes...",
+      },
+    },
     persistent_volume_claims: {
       table: {
         no_results: "No Persistent Volumn Claims found.",
@@ -112,6 +124,12 @@ const messages = {
       table: {
         no_results: "No Secrets found.",
         loading: "Loading Secrets...",
+      },
+    },
+    serviceaccounts: {
+      table: {
+        no_results: "No Service Accounts found.",
+        loading: "Loading Service Accounts...",
       },
     },
     services: {

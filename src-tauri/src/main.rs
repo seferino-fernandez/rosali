@@ -16,6 +16,7 @@ mod services;
 
 use crate::cluster_connections::ClusterConnections;
 use crate::commands::access_control_commands::*;
+use crate::commands::cluster_commands::*;
 use crate::commands::config_storage_commands::*;
 use crate::commands::networking_commands::*;
 use crate::commands::workloads_commands::*;
@@ -52,6 +53,9 @@ fn main() {
             get_clusterrole_bindings_command,
             get_roles_command,
             get_role_bindings_command,
+            get_service_accounts_command,
+            get_namespaces_command,
+            get_nodes_command,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

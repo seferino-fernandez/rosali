@@ -11,12 +11,15 @@ import DaemonSetsOverview from "@/components/DaemonSetsOverview.vue";
 import IngressesOverview from "@/components/networking/IngressesOverview.vue";
 import IngressClassesOverview from "@/components/networking/IngressClassesOverview.vue";
 import JobsOverview from "@/components/workloads/JobsOverview.vue";
+import NamespacesOverview from "@/components/cluster/NamespacesOverview.vue";
+import NodesOverview from "@/components/cluster/NodesOverview.vue";
 import PersistentVolumnClaimsOverview from "@/components/config_storage/PersistentVolumnClaimsOverview.vue";
 import ReplicaSetsOverview from "@/components/ReplicaSetsOverview.vue";
 import ReplicationControllersOverview from "@/components/workloads/ReplicationControllersOverview.vue";
 import RolesOverview from "@/components/access_control/RolesOverview.vue";
 import RoleBindingsOverview from "@/components/access_control/RoleBindingsOverview.vue";
 import SecretsOverview from "@/components/config_storage/SecretsOverview.vue";
+import ServiceAccountsOverview from "@/components/cluster/ServiceAccountsOverview.vue";
 import ServicesOverview from "@/components/networking/ServicesOverview.vue";
 import StatefulSetsOverview from "@/components/StatefulSetsOverview.vue";
 import StorageClassesOverview from "@/components/config_storage/StorageClassesOverview.vue";
@@ -83,6 +86,16 @@ const routes = [
     component: JobsOverview,
   },
   {
+    path: "/namespaces-overview/:id",
+    name: "NamespacesOverview",
+    component: NamespacesOverview,
+  },
+  {
+    path: "/nodes-overview/:id",
+    name: "NodesOverview",
+    component: NodesOverview,
+  },
+  {
     path: "/persistent-volumn-claims-overview/:id",
     name: "PersistentVolumnClaimsOverview",
     component: PersistentVolumnClaimsOverview,
@@ -111,6 +124,11 @@ const routes = [
     path: "/secrets-overview/:id",
     name: "SecretsOverview",
     component: SecretsOverview,
+  },
+  {
+    path: "/serviceaccounts-overview/:id",
+    name: "ServiceAccountsOverview",
+    component: ServiceAccountsOverview,
   },
   {
     path: "/services-overview/:id",
