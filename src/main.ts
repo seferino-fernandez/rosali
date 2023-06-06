@@ -10,10 +10,13 @@ import router from './router';
 import "@/styles.css";
 import hljs from 'highlight.js/lib/common';
 import hljsVuePlugin from "@highlightjs/vue-plugin";
+import Tooltip from 'primevue/tooltip';
+
 
 const app = createApp(App);
 app.use(hljsVuePlugin)
 app.use(i18n);
 app.use(PrimeVue, { ripple: true });
+app.directive('tooltip', Tooltip);
 app.use(router);
 app.mount("#app");

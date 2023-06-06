@@ -64,9 +64,9 @@ export default {
                     {
                         label: "Cluster",
                         items: [
-                            { label: "Namespaces" },
-                            { label: "Nodes" },
-                            { label: "Service Accounts" },
+                            { label: "Namespaces", to: currentId.value ? { name: "NamespacesOverview", params: { id: currentId.value } } : homePage },
+                            { label: "Nodes", to: currentId.value ? { name: "NodesOverview", params: { id: currentId.value } } : homePage },
+                            { label: "Service Accounts", to: currentId.value ? { name: "ServiceAccountsOverview", params: { id: currentId.value } } : homePage },
                         ],
                     },
                     {
