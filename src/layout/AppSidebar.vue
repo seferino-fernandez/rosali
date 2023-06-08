@@ -46,10 +46,10 @@ export default {
                         label: "Networking",
                         items: [
                             { label: "Services", to: currentId.value ? { name: "ServicesOverview", params: { id: currentId.value } } : homePage },
-                            { label: "Endpoints" },
+                            { label: "Endpoints", to: currentId.value ? { name: "EndpointsOverview", params: { id: currentId.value } } : homePage },
                             { label: "Ingresses", to: currentId.value ? { name: "IngressesOverview", params: { id: currentId.value } } : homePage },
                             { label: "Ingress Classes", to: currentId.value ? { name: "IngressClassesOverview", params: { id: currentId.value } } : homePage },
-                            { label: "Network Polices" },
+                            { label: "Network Policies", to: currentId.value ? { name: "NetworkPoliciesOverview", params: { id: currentId.value } } : homePage },
                         ],
                     },
                     {

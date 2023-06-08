@@ -56,6 +56,8 @@ fn main() {
             get_service_accounts_command,
             get_namespaces_command,
             get_nodes_command,
+            get_network_policies_command,
+            get_endpoints_command,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

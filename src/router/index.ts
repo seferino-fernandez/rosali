@@ -8,10 +8,12 @@ import CronJobsOverview from "@/components/workloads/CronJobsOverview.vue";
 import PodsOverview from "@/components/PodsOverview.vue";
 import DeploymentsOverview from "@/components/DeploymentsOverview.vue";
 import DaemonSetsOverview from "@/components/DaemonSetsOverview.vue";
+import EndpointsOverview from "@/components/networking/EndpointsOverview.vue";
 import IngressesOverview from "@/components/networking/IngressesOverview.vue";
 import IngressClassesOverview from "@/components/networking/IngressClassesOverview.vue";
 import JobsOverview from "@/components/workloads/JobsOverview.vue";
 import NamespacesOverview from "@/components/cluster/NamespacesOverview.vue";
+import NetworkPoliciesOverview from "@/components/networking/NetworkPoliciesOverview.vue";
 import NodesOverview from "@/components/cluster/NodesOverview.vue";
 import PersistentVolumnClaimsOverview from "@/components/config_storage/PersistentVolumnClaimsOverview.vue";
 import ReplicaSetsOverview from "@/components/ReplicaSetsOverview.vue";
@@ -71,6 +73,11 @@ const routes = [
     component: DaemonSetsOverview,
   },
   {
+    path: "/endpoints-overview/:id",
+    name: "EndpointsOverview",
+    component: EndpointsOverview,
+  },
+  {
     path: "/ingresses-overview/:id",
     name: "IngressesOverview",
     component: IngressesOverview,
@@ -89,6 +96,11 @@ const routes = [
     path: "/namespaces-overview/:id",
     name: "NamespacesOverview",
     component: NamespacesOverview,
+  },
+  {
+    path: "/networkpolicies-overview/:id",
+    name: "NetworkPoliciesOverview",
+    component: NetworkPoliciesOverview,
   },
   {
     path: "/nodes-overview/:id",

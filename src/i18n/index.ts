@@ -60,6 +60,12 @@ const messages = {
         loading: "Loading Daemon Sets...",
       },
     },
+    endpoints: {
+      table: {
+        no_results: "No Endpoints found.",
+        loading: "Loading Endpoints...",
+      },
+    },
     ingresses: {
       table: {
         no_results: "No Ingresses found.",
@@ -82,6 +88,12 @@ const messages = {
       table: {
         no_results: "No Namespaces found.",
         loading: "Loading Namespaces...",
+      },
+    },
+    networkpolicies: {
+      table: {
+        no_results: "No Network Policies found.",
+        loading: "Loading Network Policies...",
       },
     },
     nodes: {
