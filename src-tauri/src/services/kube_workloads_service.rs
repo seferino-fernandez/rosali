@@ -7,6 +7,7 @@ use uuid::Uuid;
 
 use crate::cluster_connections::{ClusterConnection, ClusterConnections};
 use crate::common::common::Response;
+use crate::kube_clients::kube_workloads_client;
 use crate::kube_model::cronjobs::KubeCronJob;
 use crate::kube_model::daemonsets::KubeDaemonSet;
 use crate::kube_model::deployments::KubeDeployment;
@@ -156,7 +157,7 @@ pub async fn get_context_overview(
         }
     };
 
-    let workload_status = crate::kube_workloads_client::get_workload_status(
+    let workload_status = kube_workloads_client::get_workload_status(
         &connection.client().clone(),
         Some(connection.client().default_namespace().to_string()),
     )
@@ -186,7 +187,7 @@ pub async fn get_recent_events(
         }
     };
 
-    match crate::kube_workloads_client::get_recent_events(&connection.client(), namespace).await {
+    match kube_workloads_client::get_recent_events(&connection.client(), namespace).await {
         Ok(recent_events) => Ok(Response {
             success: true,
             data: Some(recent_events),
@@ -201,7 +202,6 @@ pub async fn get_pods(
     id: String,
     namespace: Option<String>,
 ) -> Result<Response<Vec<KubePod>>, ()> {
-    // Replace CustomResource with KubePod
     let connections_locked = connections.lock().await;
     let connection = match connections_locked.get_connection(&id) {
         Some(conn) => conn,
@@ -212,7 +212,7 @@ pub async fn get_pods(
         }
     };
 
-    match crate::kube_workloads_client::get_pods(&connection.client(), namespace).await {
+    match kube_workloads_client::get_pods(&connection.client(), namespace).await {
         Ok(pods) => Ok(Response {
             success: true,
             data: Some(pods),
@@ -237,13 +237,8 @@ pub async fn stream_pod_logs(
         }
     };
 
-    match crate::kube_workloads_client::stream_pod_logs(
-        &connection.client(),
-        namespace,
-        &pod_name,
-        window,
-    )
-    .await
+    match kube_workloads_client::stream_pod_logs(&connection.client(), namespace, &pod_name, window)
+        .await
     {
         Ok(()) => Ok(Response {
             success: true,
@@ -269,7 +264,7 @@ pub async fn get_deployments(
         }
     };
 
-    match crate::kube_workloads_client::get_deployments(&connection.client(), namespace).await {
+    match kube_workloads_client::get_deployments(&connection.client(), namespace).await {
         Ok(deployments) => Ok(Response {
             success: true,
             data: Some(deployments),
@@ -294,9 +289,7 @@ pub async fn restart_deployment(
             ));
         }
     };
-    match crate::kube_workloads_client::restart_deployment(&connection.client(), namespace, &name)
-        .await
-    {
+    match kube_workloads_client::restart_deployment(&connection.client(), namespace, &name).await {
         Ok(kube_deployment) => Ok(Response::<KubeDeployment>::success(kube_deployment)),
         Err(e) => Ok(Response::<KubeDeployment>::error(e.to_string())),
     }
@@ -317,7 +310,7 @@ pub async fn get_statefulsets(
         }
     };
 
-    match crate::kube_workloads_client::get_statefulsets(&connection.client(), namespace).await {
+    match kube_workloads_client::get_statefulsets(&connection.client(), namespace).await {
         Ok(statefulsets) => Ok(Response {
             success: true,
             data: Some(statefulsets),
@@ -342,7 +335,7 @@ pub async fn get_daemonsets(
         }
     };
 
-    match crate::kube_workloads_client::get_daemonsets(&connection.client(), namespace).await {
+    match kube_workloads_client::get_daemonsets(&connection.client(), namespace).await {
         Ok(statefulsets) => Ok(Response {
             success: true,
             data: Some(statefulsets),
@@ -367,7 +360,7 @@ pub async fn get_replicasets(
         }
     };
 
-    match crate::kube_workloads_client::get_replicasets(&connection.client(), namespace).await {
+    match kube_workloads_client::get_replicasets(&connection.client(), namespace).await {
         Ok(statefulsets) => Ok(Response {
             success: true,
             data: Some(statefulsets),
@@ -392,7 +385,7 @@ pub async fn get_jobs(
         }
     };
 
-    match crate::kube_workloads_client::get_jobs(&connection.client(), namespace).await {
+    match kube_workloads_client::get_jobs(&connection.client(), namespace).await {
         Ok(jobs) => Ok(Response {
             success: true,
             data: Some(jobs),
@@ -417,7 +410,7 @@ pub async fn get_cronjobs(
         }
     };
 
-    match crate::kube_workloads_client::get_cronjobs(&connection.client(), namespace).await {
+    match kube_workloads_client::get_cronjobs(&connection.client(), namespace).await {
         Ok(jobs) => Ok(Response {
             success: true,
             data: Some(jobs),
@@ -442,8 +435,7 @@ pub async fn get_replication_controllers(
         }
     };
 
-    match crate::kube_workloads_client::get_replication_controllers(&connection.client(), namespace)
-        .await
+    match kube_workloads_client::get_replication_controllers(&connection.client(), namespace).await
     {
         Ok(jobs) => Ok(Response {
             success: true,

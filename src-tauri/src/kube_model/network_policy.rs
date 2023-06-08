@@ -1,8 +1,8 @@
 use super::base::KubeResource;
-use k8s_openapi::api::networking::v1::NetworkPolicy;
 use crate::common::utils;
-use serde::{Deserialize, Serialize};
+use k8s_openapi::api::networking::v1::NetworkPolicy;
 use k8s_openapi::chrono::Utc;
+use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct KubeNetworkPolicy {
@@ -17,8 +17,15 @@ impl From<NetworkPolicy> for KubeNetworkPolicy {
     fn from(network_policy: NetworkPolicy) -> Self {
         KubeNetworkPolicy {
             name: network_policy.metadata.name.clone().unwrap_or_default(),
-            namespace: network_policy.metadata.namespace.clone().unwrap_or_default(),
-            policy_types: network_policy.spec.clone().and_then(|spec| spec.policy_types),
+            namespace: network_policy
+                .metadata
+                .namespace
+                .clone()
+                .unwrap_or_default(),
+            policy_types: network_policy
+                .spec
+                .clone()
+                .and_then(|spec| spec.policy_types),
             age: utils::to_age(
                 network_policy.metadata.creation_timestamp.as_ref(),
                 Utc::now(),
