@@ -10,8 +10,6 @@ mod commands;
 mod common;
 mod kube_clients;
 mod kube_model;
-mod kube_networking_client;
-mod kube_workloads_client;
 mod services;
 
 use crate::cluster_connections::ClusterConnections;
