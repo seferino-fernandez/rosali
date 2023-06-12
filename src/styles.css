@@ -36,3 +36,11 @@ body .p-panelmenu .p-panelmenu-header:not(.p-highlight):not(.p-disabled):hover .
   border: none !important;
   margin: 0 !important;
 }
+
+body .tab-name-button {
+  padding-right: 10px;
+}
+
+body .tab-cancel-button {
+  width: 0;
+}
