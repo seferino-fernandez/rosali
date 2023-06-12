@@ -1,10 +1,15 @@
 <template>
     <TabView v-model="activeTabIndex">
-        <TabPanel v-for="(tab, index) in podLogTabs" :key="tab.id" :header="tab.pod.name">
+        <TabPanel v-for="(tab, index) in podLogTabs" :key="tab.id">
+            <template #header>
+                <div class="p-buttonset">
+                    <Button class="tab-name-button" text size="small">{{ tab.pod.name }}</Button>
+                    <Button icon="pi pi-times" text size="small" class="close-tab-button" @click="closeTab(index)" />
+                </div>
+            </template>
             <ScrollPanel class="p-scrollpanel-content" style="width: 100%; height: 100%">
                 <highlightjs autodetect :code="tab.logs" />
             </ScrollPanel>
-            <Button icon="pi pi-times" class="close-tab-button" @click="closeTab(index)" />
         </TabPanel>
     </TabView>
 </template>
