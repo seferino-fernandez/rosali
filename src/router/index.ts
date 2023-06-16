@@ -5,7 +5,6 @@ import ClusterRolesOverview from "@/components/access_control/ClusterRolesOvervi
 import ClusterRoleBindingsOverview from "@/components/access_control/ClusterRoleBindingsOverview.vue";
 import ConfigMapsOverview from "@/components/config_storage/ConfigMapsOverview.vue";
 import CronJobsOverview from "@/components/workloads/CronJobsOverview.vue";
-import PodsOverview from "@/components/PodsOverview.vue";
 import DeploymentsOverview from "@/components/DeploymentsOverview.vue";
 import DaemonSetsOverview from "@/components/DaemonSetsOverview.vue";
 import EndpointsOverview from "@/components/networking/EndpointsOverview.vue";
@@ -16,6 +15,8 @@ import NamespacesOverview from "@/components/cluster/NamespacesOverview.vue";
 import NetworkPoliciesOverview from "@/components/networking/NetworkPoliciesOverview.vue";
 import NodesOverview from "@/components/cluster/NodesOverview.vue";
 import PersistentVolumnClaimsOverview from "@/components/config_storage/PersistentVolumnClaimsOverview.vue";
+import PodsOverview from "@/components/PodsOverview.vue";
+import PodLogsView from "@/components/stream_logs/PodLogsView.vue";
 import ReplicaSetsOverview from "@/components/ReplicaSetsOverview.vue";
 import ReplicationControllersOverview from "@/components/workloads/ReplicationControllersOverview.vue";
 import RolesOverview from "@/components/access_control/RolesOverview.vue";
@@ -61,6 +62,11 @@ const routes = [
     path: "/pods-overview/:id",
     name: "PodsOverview",
     component: PodsOverview,
+  },
+  {
+    path: "/cluster/:id/namespaces/:podNamespace/pod/:podName/logs",
+    name: "PodLogsView",
+    component: PodLogsView,
   },
   {
     path: "/deployments-overview/:id",
