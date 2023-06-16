@@ -18,9 +18,14 @@ This project uses Tauri with Vite. Make sure to have the necessary prerequisites
 
 2. Install dependencies:
 
+    Install Node and NPM: https://docs.npmjs.com/downloading-and-installing-node-js-and-npm
+
+    Install the Node dependencies:
     ```bash
     npm install
     ```
+    Install Rust: https://www.rust-lang.org/tools/install
+
 
 3. Start the development server:
 
