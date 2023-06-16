@@ -1,14 +1,11 @@
 <template>
   <div id="app-container">
-    <AppTopbar :tabs="tabs" />
+    <AppTopbar :tabs="tabs" :logTabs="logTabs" />
     <div id="content-container">
       <AppSidebar v-show="showSidebar" />
       <Splitter layout="vertical" id="main-content">
-        <SplitterPanel class="flex align-items-center justify-content-center" :size="80">
+        <SplitterPanel class="flex align-items-center justify-content-center" :size="100">
           <AppView @context-selected="addTab" @view-logs="onViewLogs" />
-        </SplitterPanel>
-        <SplitterPanel v-if="showBottomBar" :size="40">
-          <AppBottombar @view-logs="onViewLogs" />
         </SplitterPanel>
       </Splitter>
     </div>
@@ -18,7 +15,6 @@
 <script>
 import AppTopbar from "./AppTopbar.vue";
 import AppSidebar from "./AppSidebar.vue";
-import AppBottombar from "./AppBottombar.vue";
 import AppView from "./AppView.vue";
 import { ref, computed, provide } from "vue";
 import { useRouter, useRoute } from "vue-router";
@@ -30,19 +26,16 @@ export default {
   components: {
     AppTopbar,
     AppSidebar,
-    AppBottombar,
     AppView,
     Splitter,
     SplitterPanel
   },
   setup() {
     const tabs = ref([]);
+    const logTabs = ref([]);
     const router = useRouter();
     const route = useRoute();
-    const selectedPod = ref({});
     const connectionId = ref(null);
-    const showBottomBar = ref(false);
-    const bottombarData = ref({});
 
     async function addTab(path, label, name, params) {
       const tabIndex = tabs.value.findIndex((t) => {
@@ -63,28 +56,22 @@ export default {
 
     const onViewLogs = async ({ connectionId: connId, pod }) => {
       connectionId.value = connId;
-      selectedPod.value = pod;
-      showBottomBar.value = true;
-      bottombarData.value = { connectionId: connId, selectedPod: pod };
+      logTabs.value.push({
+        label: pod.name,
+        name: "PodLogsView",
+        params: { id: connId, podNamespace: pod.namespace, podName: pod.name },
+      });
     };
 
-    const showLogs = computed(() => route.name === "PodsOverview");
     const showSidebar = computed(() => route.name !== "KubeconfigContexts");
 
     provide("addTab", addTab);
-    provide('showLogs', showLogs);
-    provide("bottombarData", {
-      connectionId,
-      selectedPod,
-    });
 
     return {
       tabs,
+      logTabs,
       showSidebar,
-      showBottomBar,
       addTab,
-      showLogs,
-      selectedPod,
       connectionId,
       onViewLogs,
     };

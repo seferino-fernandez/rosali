@@ -34,13 +34,11 @@ impl ClusterConnections {
 
     // Adds a new cluster connection to the connections HashMap
     pub fn add_connection(&mut self, connection: ClusterConnection) {
-        println!("Adding connection with id: {}", connection.id());
         self.connections.insert(connection.id.clone(), connection);
     }
 
     // Removes a cluster connection from the connections HashMap by its ID
     pub fn remove_connection(&mut self, id: &str) {
-        println!("Removing connection with id: {}", id);
         self.connections.remove(id);
     }
 

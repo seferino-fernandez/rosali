@@ -27,7 +27,7 @@ import Button from "primevue/button";
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
 import Sidebar from 'primevue/sidebar';
-import { invoke, event } from "@tauri-apps/api";
+import { invoke } from "@tauri-apps/api";
 import Divider from 'primevue/divider';
 import ScrollPanel from 'primevue/scrollpanel';
 import hljs from 'highlight.js/lib/common';
@@ -64,7 +64,7 @@ export default {
             pods.value = response.data;
         };
 
-        const viewLogs = async () => {
+        const viewLogs = async (e) => {
             showDetails.value = false;
             emit('view-logs', {
                 connectionId: clusterConnectionId.value,

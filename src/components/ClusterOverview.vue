@@ -15,12 +15,13 @@
             </div>
         </div>
         <h3>{{ $t('cluster_overview.recent_events') }}</h3>
-        <DataTable :value="recentEvents" class="p-datatable-sm">
+        <DataTable :value="recentEvents" scrollable scrollHeight="flex" class="p-datatable-sm">
             <template #empty>{{ $t('events.table.no_results') }}</template>
             <template #loading>{{ $t('events.table.loading') }}</template>
             <Column field="warning_or_regular" header="Type">
                 <template #body="slotProps">
-                    <span :class="{'warning-indicator': slotProps.data.warning_or_regular === 'Warning'}">{{ slotProps.data.warning_or_regular }}</span>
+                    <span :class="{ 'warning-indicator': slotProps.data.warning_or_regular === 'Warning' }">{{
+                        slotProps.data.warning_or_regular }}</span>
                 </template>
             </Column>
             <Column field="name" header="Name"></Column>
@@ -73,12 +74,12 @@ export default {
                 }
                 let unformattedEvents = recentEventsResponse.data;
                 recentEvents.value = unformattedEvents.map(event => {
-                        return {
-                            ...event,
-                            first_time: new Date(event.first_time).toLocaleString(),
-                            last_time: new Date(event.last_time).toLocaleString(),
-                        }
-                    });
+                    return {
+                        ...event,
+                        first_time: new Date(event.first_time).toLocaleString(),
+                        last_time: new Date(event.last_time).toLocaleString(),
+                    }
+                });
 
                 deploymentChartData.value = {
                     labels: ["Running", "Failed"],
@@ -129,7 +130,6 @@ export default {
   
 <style>
 .cluster-overview-container {
-    overflow-x: hidden;
     padding: 1rem;
 }
 
