@@ -45,8 +45,9 @@ pub async fn remove_cluster_connection(
 pub async fn get_context_overview(
     connections: State<'_, Arc<Mutex<ClusterConnections>>>,
     id: String,
+    namespace: Option<String>,
 ) -> Result<Response<WorkloadStatus>, ()> {
-    kube_workloads_service::get_context_overview(connections, id).await
+    kube_workloads_service::get_context_overview(connections, id, namespace).await
 }
 
 #[tauri::command]

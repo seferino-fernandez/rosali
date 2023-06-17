@@ -22,7 +22,7 @@ export default {
         const logs = ref("");
         const clusterConnectionId = ref(route.params.id);
         const podName = ref(route.params.podName);
-        const podNamespace = ref(route.params.podNameSpace);
+        const podNamespace = ref(route.params.podNamespace);
 
         onMounted(async () => {
             event.listen("log_line", (event) => {

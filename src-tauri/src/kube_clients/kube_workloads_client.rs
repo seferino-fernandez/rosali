@@ -41,17 +41,26 @@ pub async fn get_workload_status(
     client: &kube::Client,
     namespace: Option<String>,
 ) -> Result<WorkloadStatus, Box<dyn std::error::Error>> {
-    let namespace = namespace.unwrap_or_else(|| String::from("default"));
+    let namespace_ref = namespace.as_deref();
 
-    let pods: Api<Pod> = Api::namespaced(client.clone(), &namespace);
-    let deployments: Api<Deployment> = Api::namespaced(client.clone(), &namespace);
-    let replica_sets: Api<ReplicaSet> = Api::namespaced(client.clone(), &namespace);
+    let pods_api: Api<Pod> = match namespace_ref {
+        Some(namespace) => Api::namespaced(client.clone(), namespace),
+        None => Api::all(client.clone()),
+    };
+    let deployments_api: Api<Deployment> = match namespace_ref {
+        Some(namespace) => Api::namespaced(client.clone(), namespace),
+        None => Api::all(client.clone()),
+    };
+    let replica_sets_api: Api<ReplicaSet> = match namespace_ref {
+        Some(namespace) => Api::namespaced(client.clone(), namespace),
+        None => Api::all(client.clone()),
+    };
 
     let lp: ListParams = ListParams::default();
 
-    let pod_list: kube::core::ObjectList<Pod> = pods.list(&lp).await?;
-    let deployment_list: kube::core::ObjectList<Deployment> = deployments.list(&lp).await?;
-    let replica_set_list: kube::core::ObjectList<ReplicaSet> = replica_sets.list(&lp).await?;
+    let pod_list: kube::core::ObjectList<Pod> = pods_api.list(&lp).await?;
+    let deployment_list: kube::core::ObjectList<Deployment> = deployments_api.list(&lp).await?;
+    let replica_set_list: kube::core::ObjectList<ReplicaSet> = replica_sets_api.list(&lp).await?;
 
     let mut pod_running: i32 = 0;
     let mut pod_failed: i32 = 0;
@@ -115,8 +124,10 @@ pub async fn get_recent_events(
     client: &kube::Client,
     namespace: Option<String>,
 ) -> Result<Vec<KubeEvent>, Box<dyn std::error::Error>> {
-    let namespace = namespace.unwrap_or_else(|| String::from("default"));
-    let events_api: Api<Event> = Api::namespaced(client.clone(), &namespace);
+    let events_api: Api<Event> = match namespace {
+        Some(namespace) => Api::namespaced(client.clone(), &namespace),
+        None => Api::all(client.clone()),
+    };
     let lp = ListParams::default().timeout(30);
     let events = events_api.list(&lp).await?;
 
@@ -161,8 +172,10 @@ pub async fn stream_pod_logs(
     pod_name: &str,
     window: Window,
 ) -> Result<(), kube::Error> {
-    let namespace = namespace.unwrap_or_else(|| String::from("default"));
-    let pods_api: Api<Pod> = Api::namespaced(client.clone(), &namespace);
+    let pods_api: Api<Pod> = match namespace {
+        Some(namespace) => Api::namespaced(client.clone(), &namespace),
+        None => Api::all(client.clone()),
+    };
 
     let log_params = LogParams {
         container: None,
