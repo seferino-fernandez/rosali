@@ -121,7 +121,6 @@ async fn add_cluster_to_connections(
         .map_err(|_| format!("Failed to create kube::Client for context {}", context_name))?;
 
     let connection_id = Uuid::new_v4().to_string();
-    println!("Generated connection_id: {}", connection_id);
     let connection = ClusterConnection::new(connection_id.clone(), client);
 
     connections.lock().await.add_connection(connection);
@@ -145,6 +144,7 @@ pub async fn remove_cluster_connection(
 pub async fn get_context_overview(
     connections: State<'_, Arc<Mutex<ClusterConnections>>>,
     id: String,
+    namespace: Option<String>,
 ) -> Result<Response<WorkloadStatus>, ()> {
     let connections_locked = connections.lock().await;
 
@@ -159,7 +159,7 @@ pub async fn get_context_overview(
 
     let workload_status = kube_workloads_client::get_workload_status(
         &connection.client().clone(),
-        Some(connection.client().default_namespace().to_string()),
+        namespace,
     )
     .await
     .unwrap_or_else(|_| WorkloadStatus::new());
@@ -177,7 +177,6 @@ pub async fn get_recent_events(
     namespace: Option<String>,
 ) -> Result<Response<Vec<KubeEvent>>, ()> {
     let connections_locked = connections.lock().await;
-    println!("Looking for connection with id: {}", id);
     let connection = match connections_locked.get_connection(&id) {
         Some(conn) => conn,
         None => {
