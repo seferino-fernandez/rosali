@@ -20,6 +20,19 @@ const messages = {
         loading: "Loading Kubernetes contexts...",
       },
     },
+    kubernetes: {
+      meta: {
+        name: "Name",
+        age: "Age",
+        restart: "Restart | Restarts",
+        status: "Status",
+      },
+      pod: "Pod | Pods",
+      cluster: "Cluster | Clusters",
+      deployment: "Deployment | Deployments",
+      replica_set: "Replica Set | Replica Sets",
+      namespace: "Namespace | Namespaces",
+    },
     cluster_overview: {
       deployments: "Deployments",
       pods: "Pods",

@@ -1,19 +1,24 @@
 <template>
     <div class="pod-overview">
-        <Button @click="fetchPods" rounded icon="pi pi-refresh" />
-
-        <DataTable :value="pods" @row-click="onRowClick" dataKey="id" :paginator="true" :rows="10">
-            <Column field="name" header="Name" />
-            <Column field="namespace" header="Namespace" />
-            <Column field="status" header="Status" />
-            <Column field="restarts" header="Restarts" />
-            <Column field="age" header="Age" />
+        <DataTable :value="pods" @row-click="onRowClick" dataKey="name">
+            <template #header>
+                <div class="">
+                    <span class="">{{ $t('kubernetes.pod', 2) }}</span>
+                    <span class="">({{ pods ? pods.length : 0 }})</span>
+                    <Button icon="pi pi-refresh" rounded raised @click="fetchPods" />
+                </div>
+            </template>
+            <Column field="name" :header="$t('kubernetes.meta.name', 1)" />
+            <Column field="namespace" :header="$t('kubernetes.namespace', 1)" />
+            <Column field="status" :header="$t('kubernetes.meta.status', 1)" />
+            <Column field="restarts" :header="$t('kubernetes.meta.restart', 2)" />
+            <Column field="age" :header="$t('kubernetes.meta.age')" />
         </DataTable>
 
         <Sidebar v-model:visible="showDetails" position="right">
             <template #header>
                 <h3>{{ selectedPod.name }}</h3>
-                <Button label="Logs" icon="pi pi-file" class="p-mr-2" @click="viewLogs" />
+                <Button :label="$t('kubernetes.pod', 2)" icon="pi pi-file" class="p-mr-2" @click="viewLogs" />
                 <Divider />
             </template>
         </Sidebar>
@@ -77,19 +82,11 @@ export default {
             showDetails.value = true;
         };
 
-        const execPod = (rowData) => {
-        };
-
-        const deletePod = (rowData) => {
-        };
-
         return {
             pods,
             fetchPods,
             onRowClick,
             viewLogs,
-            execPod,
-            deletePod,
             showDetails,
             showLogs,
             selectedPod,
