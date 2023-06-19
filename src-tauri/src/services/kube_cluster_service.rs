@@ -4,7 +4,7 @@ use tauri::State;
 use tokio::sync::Mutex;
 
 use crate::cluster_connections::ClusterConnections;
-use crate::common::common::Response;
+use crate::common::response::Response;
 use crate::kube_clients::kube_cluster_client;
 use crate::kube_model::namespaces::KubeNamespace;
 use crate::kube_model::nodes::KubeNode;
@@ -25,7 +25,7 @@ pub async fn get_service_accounts(
         }
     };
 
-    match kube_cluster_client::get_service_accounts(&connection.client(), namespace).await {
+    match kube_cluster_client::get_service_accounts(connection.client(), namespace).await {
         Ok(service_accounts) => Ok(Response {
             success: true,
             data: Some(service_accounts),
@@ -49,7 +49,7 @@ pub async fn get_namespaces(
         }
     };
 
-    match kube_cluster_client::get_namespaces(&connection.client()).await {
+    match kube_cluster_client::get_namespaces(connection.client()).await {
         Ok(namespaces) => Ok(Response {
             success: true,
             data: Some(namespaces),
@@ -73,7 +73,7 @@ pub async fn get_nodes(
         }
     };
 
-    match kube_cluster_client::get_nodes(&connection.client()).await {
+    match kube_cluster_client::get_nodes(connection.client()).await {
         Ok(nodes) => Ok(Response {
             success: true,
             data: Some(nodes),

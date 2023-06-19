@@ -1,5 +1,5 @@
 use crate::cluster_connections::ClusterConnections;
-use crate::common::common::Response;
+use crate::common::response::Response;
 use crate::kube_model::configmap::KubeConfigMap;
 use crate::kube_model::persistent_volumn_claims::KubePersistentVolumeClaim;
 use crate::kube_model::secrets::KubeSecret;

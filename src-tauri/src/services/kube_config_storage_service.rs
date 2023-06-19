@@ -4,7 +4,7 @@ use tauri::State;
 use tokio::sync::Mutex;
 
 use crate::cluster_connections::ClusterConnections;
-use crate::common::common::Response;
+use crate::common::response::Response;
 
 use crate::kube_model::configmap::KubeConfigMap;
 use crate::kube_model::persistent_volumn_claims::KubePersistentVolumeClaim;
@@ -27,7 +27,7 @@ pub async fn get_config_maps(
     };
 
     match crate::kube_clients::kube_config_storage_client::get_config_maps(
-        &connection.client(),
+        connection.client(),
         namespace,
     )
     .await
@@ -57,7 +57,7 @@ pub async fn get_secrets(
     };
 
     match crate::kube_clients::kube_config_storage_client::get_secrets(
-        &connection.client(),
+        connection.client(),
         namespace,
     )
     .await
@@ -87,7 +87,7 @@ pub async fn get_persistent_volumn_claims(
     };
 
     match crate::kube_clients::kube_config_storage_client::get_persistent_volumn_claims(
-        &connection.client(),
+        connection.client(),
         namespace,
     )
     .await
@@ -117,7 +117,7 @@ pub async fn get_storage_classes(
         }
     };
 
-    match crate::kube_clients::kube_config_storage_client::get_storage_classes(&connection.client())
+    match crate::kube_clients::kube_config_storage_client::get_storage_classes(connection.client())
         .await
     {
         Ok(storage_classes) => Ok(Response {

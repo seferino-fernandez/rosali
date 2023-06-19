@@ -25,7 +25,7 @@ impl From<PersistentVolumeClaim> for KubePersistentVolumeClaim {
             .and_then(|resources| resources.requests)
             .and_then(|requests| requests.get("storage").cloned())
         {
-            Some(quantity) => quantity.0.clone(),
+            Some(quantity) => quantity.0,
             None => "".to_string(),
         };
 

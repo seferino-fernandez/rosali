@@ -23,7 +23,7 @@ impl From<IngressClass> for KubeIngressClass {
                 .name
                 .clone()
                 .unwrap_or_default()
-                .clone(),
+                ,
             namespace: ingress_class.metadata.namespace.clone().unwrap_or_default(),
             controller: ingress_class
                 .spec
@@ -31,7 +31,7 @@ impl From<IngressClass> for KubeIngressClass {
                 .unwrap_or_default()
                 .controller
                 .unwrap_or_default()
-                .clone(),
+                ,
             api_group: ingress_class
                 .metadata
                 .annotations
@@ -48,7 +48,7 @@ impl From<IngressClass> for KubeIngressClass {
                 .unwrap_or_default()
                 .scope
                 .unwrap_or_default()
-                .clone(),
+                ,
             kind: ingress_class
                 .spec
                 .clone()

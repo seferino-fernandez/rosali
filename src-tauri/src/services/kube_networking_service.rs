@@ -4,7 +4,7 @@ use tauri::State;
 use tokio::sync::Mutex;
 
 use crate::cluster_connections::ClusterConnections;
-use crate::common::common::Response;
+use crate::common::response::Response;
 use crate::kube_clients::kube_networking_client;
 use crate::kube_model::endpoints::KubeEndpoints;
 use crate::kube_model::ingress::KubeIngress;
@@ -27,7 +27,7 @@ pub async fn get_services(
         }
     };
 
-    match kube_networking_client::get_services(&connection.client(), namespace).await {
+    match kube_networking_client::get_services(connection.client(), namespace).await {
         Ok(jobs) => Ok(Response {
             success: true,
             data: Some(jobs),
@@ -52,7 +52,7 @@ pub async fn get_ingresses(
         }
     };
 
-    match kube_networking_client::get_ingresses(&connection.client(), namespace).await {
+    match kube_networking_client::get_ingresses(connection.client(), namespace).await {
         Ok(ingresses) => Ok(Response {
             success: true,
             data: Some(ingresses),
@@ -76,7 +76,7 @@ pub async fn get_ingress_classes(
         }
     };
 
-    match kube_networking_client::get_ingress_classes(&connection.client()).await {
+    match kube_networking_client::get_ingress_classes(connection.client()).await {
         Ok(ingress_classes) => Ok(Response {
             success: true,
             data: Some(ingress_classes),
@@ -101,7 +101,7 @@ pub async fn get_network_policies(
         }
     };
 
-    match kube_networking_client::get_network_policies(&connection.client(), namespace).await {
+    match kube_networking_client::get_network_policies(connection.client(), namespace).await {
         Ok(network_policies) => Ok(Response {
             success: true,
             data: Some(network_policies),
@@ -126,7 +126,7 @@ pub async fn get_endpoints(
         }
     };
 
-    match kube_networking_client::get_endpoints(&connection.client(), namespace).await {
+    match kube_networking_client::get_endpoints(connection.client(), namespace).await {
         Ok(endpoints) => Ok(Response {
             success: true,
             data: Some(endpoints),
