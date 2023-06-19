@@ -11,10 +11,6 @@ impl ClusterConnection {
         Self { id, client }
     }
 
-    pub fn id(&self) -> &String {
-        &self.id
-    }
-
     pub fn client(&self) -> &kube::Client {
         &self.client
     }

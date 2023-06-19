@@ -3,7 +3,7 @@ use tauri::State;
 use tokio::sync::Mutex;
 
 use crate::cluster_connections::ClusterConnections;
-use crate::common::common::Response;
+use crate::common::response::Response;
 use crate::kube_model::namespaces::KubeNamespace;
 use crate::kube_model::nodes::KubeNode;
 use crate::kube_model::serviceaccounts::KubeServiceAccount;

@@ -4,7 +4,7 @@ use tauri::State;
 use tokio::sync::Mutex;
 
 use crate::cluster_connections::ClusterConnections;
-use crate::common::common::Response;
+use crate::common::response::Response;
 use crate::kube_clients::kube_access_control_client;
 use crate::kube_model::clusterrolebindings::KubeClusterRoleBinding;
 use crate::kube_model::clusterroles::KubeClusterRole;
@@ -25,7 +25,7 @@ pub async fn get_cluster_roles(
         }
     };
 
-    match kube_access_control_client::get_cluster_roles(&connection.client()).await {
+    match kube_access_control_client::get_cluster_roles(connection.client()).await {
         Ok(cluster_roles) => Ok(Response {
             success: true,
             data: Some(cluster_roles),
@@ -49,7 +49,7 @@ pub async fn get_cluster_role_bindings(
         }
     };
 
-    match kube_access_control_client::get_cluster_role_bindings(&connection.client()).await {
+    match kube_access_control_client::get_cluster_role_bindings(connection.client()).await {
         Ok(cluster_role_bindings) => Ok(Response {
             success: true,
             data: Some(cluster_role_bindings),
@@ -76,7 +76,7 @@ pub async fn get_roles(
         }
     };
 
-    match kube_access_control_client::get_roles(&connection.client(), namespace).await {
+    match kube_access_control_client::get_roles(connection.client(), namespace).await {
         Ok(roles) => Ok(Response {
             success: true,
             data: Some(roles),
@@ -101,7 +101,7 @@ pub async fn get_role_bindings(
         }
     };
 
-    match kube_access_control_client::get_roles_bindings(&connection.client(), namespace).await {
+    match kube_access_control_client::get_roles_bindings(connection.client(), namespace).await {
         Ok(role_bindings) => Ok(Response {
             success: true,
             data: Some(role_bindings),

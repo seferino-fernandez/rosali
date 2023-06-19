@@ -2,7 +2,7 @@ use std::sync::Arc;
 use tauri::{State, Window};
 use tokio::sync::Mutex;
 
-use crate::common::common::Response;
+use crate::common::response::Response;
 use crate::{
     cluster_connections::ClusterConnections,
     kube_model::{

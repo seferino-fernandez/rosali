@@ -1,4 +1,4 @@
-use crate::common::common::Response;
+use crate::common::response::Response;
 use crate::kube_model::endpoints::KubeEndpoints;
 use crate::kube_model::network_policy::KubeNetworkPolicy;
 use crate::{

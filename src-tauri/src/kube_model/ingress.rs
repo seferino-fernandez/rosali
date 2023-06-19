@@ -27,16 +27,11 @@ impl From<Ingress> for KubeIngress {
                         .map(|rule| {
                             let paths = rule
                                 .http
-                                .as_ref()
-                                .and_then(|http| {
-                                    Some(
-                                        http.paths
+                                .as_ref().map(|http| http.paths
                                             .iter()
                                             .map(|path| path.path.clone().unwrap_or_default())
                                             .collect::<Vec<_>>()
-                                            .join(", "),
-                                    )
-                                })
+                                            .join(", "))
                                 .unwrap_or_default();
                             format!("{}: {}", rule.host.clone().unwrap_or_default(), paths)
                         })
@@ -50,9 +45,7 @@ impl From<Ingress> for KubeIngress {
             .status
             .as_ref()
             .and_then(|status| {
-                status.load_balancer.as_ref().and_then(|load_balancer| {
-                    Some(
-                        load_balancer
+                status.load_balancer.as_ref().map(|load_balancer| load_balancer
                             .ingress
                             .as_ref()
                             .map(|ingresses| {
@@ -70,9 +63,7 @@ impl From<Ingress> for KubeIngress {
                                     .collect::<Vec<_>>()
                                     .join(", ")
                             })
-                            .unwrap_or_default(),
-                    )
-                })
+                            .unwrap_or_default())
             })
             .unwrap_or_default();
 
