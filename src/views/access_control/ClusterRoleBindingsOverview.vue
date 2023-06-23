@@ -1,9 +1,9 @@
 <template>
-    <DataTable :value="clusterRoleBindings" @row-click="onRowClick" :paginator="true" :rows="10">
+    <DataTable :value="clusterRoleBindings" @row-click="onRowClick">
         <template #empty>{{ $t('clusterrolebindings.table.no_results') }}</template>
         <template #loading>{{ $t('clusterrolebindings.table.loading') }}</template>
         <Column field="name" header="Name" />
-        <Column field="bindings" header="Bindings" :body="bindingsTemplate"/>
+        <Column field="bindings" header="Bindings" :body="bindingsTemplate" />
         <Column field="age" header="Age" />
     </DataTable>
 </template>

@@ -32,6 +32,7 @@ const messages = {
       deployment: "Deployment | Deployments",
       replica_set: "Replica Set | Replica Sets",
       namespace: "Namespace | Namespaces",
+      log: "Log | Logs"
     },
     cluster_overview: {
       deployments: "Deployments",

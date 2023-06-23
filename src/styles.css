@@ -11,36 +11,22 @@
 }
 
 html,
-body,
-#app {
+body {
   font-family: var(--font-family);
   color: var(--text-color);
   background-color: var(--surface-ground);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   margin: 0;
   padding: 0;
   min-height: 100%;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 a {
   text-decoration: none;
 }
 
-body .p-panelmenu .p-panelmenu-header .p-panelmenu-header-content {
-  border: none !important;
-  margin: 0 !important;
-}
-
-body .p-panelmenu .p-panelmenu-header:not(.p-highlight):not(.p-disabled):hover .p-panelmenu-header-content {
-  border: none !important;
-  margin: 0 !important;
-}
-
-body .tab-name-button {
-  padding-right: 10px;
-}
-
-body .tab-cancel-button {
-  width: 0;
+.p-tabmenu .p-tabmenu-nav {
+  background: transparent;
+  border: none;
 }

@@ -1,47 +1,43 @@
 <template>
-  <div class="kubeconfig-contexts">
-    <DataTable v-model:filters="filters" :value="contexts" @row-click="onRowClick" :selection-mode="'single'"
-      filterDisplay="row" :globalFilterFields="['name', 'path', 'cluster', 'user', 'namespace']">
-      <template #header>
-        <div class="flex flex-wrap justify-content-end gap-2">
-          <span class="text-xl text-900 font-bold">{{ $t('kubeconfig.table.header') }}</span>
-        </div>
-        <div class="flex justify-content-end">
-          <span class="p-input-icon-left">
-            <i class="pi pi-search" />
-            <InputText v-model="filters['global'].value" placeholder="Search" />
-          </span>
-        </div>
+  <DataTable v-model:filters="filters" :value="contexts" @row-click="onRowClick" :selection-mode="'single'"
+    filterDisplay="row" :globalFilterFields="['name', 'path', 'cluster', 'user', 'namespace']" scrollable scrollHeight="flex">
+    <template #header>
+      <div class="flex justify-content-between">
+        <span class="">{{ $t('kubeconfig.table.header') }}</span>
+        <span class="p-input-icon-left">
+          <i class="pi pi-search" />
+          <InputText v-model="filters['global'].value" placeholder="Search" />
+        </span>
+      </div>
+    </template>
+    <template #empty>{{ $t('kubeconfig.table.no_results') }}</template>
+    <template #loading>{{ $t('kubeconfig.table.loading') }}</template>
+    <Column field="name" filterField="name" :header="$t('kubeconfig.table.name')">
+      <template #body="{ data }">
+        {{ data.name }}
       </template>
-      <template #empty>{{ $t('kubeconfig.table.no_results') }}</template>
-      <template #loading>{{ $t('kubeconfig.table.loading') }}</template>
-      <Column field="name" filterField="name" :header="$t('kubeconfig.table.name')">
-        <template #body="{ data }">
-          {{ data.name }}
-        </template>
-      </Column>
-      <Column field="path" filterField="path" :header="$t('kubeconfig.table.path')">
-        <template #body="{ data }">
-          {{ data.path }}
-        </template>
-      </Column>
-      <Column field="cluster" filterField="cluster" :header="$t('kubeconfig.table.cluster')">
-        <template #body="{ data }">
-          {{ data.cluster }}
-        </template>
-      </Column>
-      <Column field="user" filterField="user" :header="$t('kubeconfig.table.user')">
-        <template #body="{ data }">
-          {{ data.user }}
-        </template>
-      </Column>
-      <Column field="namespace" filterField="namespace" :header="$t('kubeconfig.table.namespace')">
-        <template #body="{ data }">
-          {{ data.namespace }}
-        </template>
-      </Column>
-    </DataTable>
-  </div>
+    </Column>
+    <Column field="path" filterField="path" :header="$t('kubeconfig.table.path')">
+      <template #body="{ data }">
+        {{ data.path }}
+      </template>
+    </Column>
+    <Column field="cluster" filterField="cluster" :header="$t('kubeconfig.table.cluster')">
+      <template #body="{ data }">
+        {{ data.cluster }}
+      </template>
+    </Column>
+    <Column field="user" filterField="user" :header="$t('kubeconfig.table.user')">
+      <template #body="{ data }">
+        {{ data.user }}
+      </template>
+    </Column>
+    <Column field="namespace" filterField="namespace" :header="$t('kubeconfig.table.namespace')">
+      <template #body="{ data }">
+        {{ data.namespace }}
+      </template>
+    </Column>
+  </DataTable>
 </template>
   
 <script>

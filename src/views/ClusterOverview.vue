@@ -1,23 +1,26 @@
 <template>
-    <div class="cluster-overview-container flex flex-column md:flex-row md:justify-content-between row-gap-3">
-        <div class="charts">
-            <div class="chart-container">
-                <h3>{{ $t('cluster_overview.deployments') }}</h3>
+    <div class="">
+        <div class="flex flex-inline p-4">
+            <div class="flex-column">
+                <div class="text-base text-color text-center font-bold">{{ $t('cluster_overview.deployments') }}</div>
                 <Chart type="doughnut" :data="deploymentChartData" />
             </div>
-            <div class="chart-container">
-                <h3>{{ $t('cluster_overview.pods') }}</h3>
+            <div class="flex-column">
+                <div class="text-base text-color text-center font-bold">{{ $t('cluster_overview.pods') }}</div>
                 <Chart type="doughnut" :data="podChartData" />
             </div>
-            <div class="chart-container">
-                <h3>{{ $t('cluster_overview.replica_sets') }}</h3>
+            <div class="flex-column">
+                <div class="text-base text-color text-center font-bold">{{ $t('cluster_overview.replica_sets') }}</div>
                 <Chart type="doughnut" :data="replicaSetChartData" />
             </div>
         </div>
-        <h3>{{ $t('cluster_overview.recent_events') }}</h3>
-        <DataTable :value="recentEvents" scrollable scrollHeight="flex" class="p-datatable-sm">
-            <template #empty>{{ $t('events.table.no_results') }}</template>
-            <template #loading>{{ $t('events.table.loading') }}</template>
+        <DataTable tableStyle="min-width: 50rem" :value="recentEvents" scrollable scrollHeight="flex">
+            <template #header>
+                <div class="">
+                    <span class="text-base text-color font-bold">{{ $t('cluster_overview.recent_events', 2) }}</span>
+                    <span class="font-light"> ({{ recentEvents ? recentEvents.length : 0 }})</span>
+                </div>
+            </template>
             <Column field="warning_or_regular" header="Type">
                 <template #body="slotProps">
                     <span :class="{ 'warning-indicator': slotProps.data.warning_or_regular === 'Warning' }">{{
@@ -32,6 +35,8 @@
             <Column field="count" header="Count"></Column>
             <Column field="first_time" header="First Time"></Column>
             <Column field="last_time" header="Last Time"></Column>
+            <template #empty>{{ $t('events.table.no_results') }}</template>
+            <template #loading>{{ $t('events.table.loading') }}</template>
         </DataTable>
     </div>
 </template>
@@ -129,21 +134,6 @@ export default {
 </script>
   
 <style>
-.cluster-overview-container {
-    padding: 1rem;
-}
-
-.charts {
-    display: flex;
-    justify-content: space-evenly;
-}
-
-.chart-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
 .warning-indicator {
     color: #FF6384;
     font-weight: bold;

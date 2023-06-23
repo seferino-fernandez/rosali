@@ -1,5 +1,5 @@
 <template>
-    <DataTable :value="persistentVolumeClaims" @row-click="onRowClick" :paginator="true" :rows="10">
+    <DataTable :value="persistentVolumeClaims" @row-click="onRowClick">
         <template #empty>{{ $t('persistent_volume_claims.table.no_results') }}</template>
         <template #loading>{{ $t('persistent_volume_claims.table.loading') }}</template>
         <Column field="name" header="Name" />

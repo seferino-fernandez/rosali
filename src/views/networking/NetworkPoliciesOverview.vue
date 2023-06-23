@@ -1,5 +1,5 @@
 <template>
-    <DataTable :value="networkPolicies" @row-click="onRowClick" :paginator="true" :rows="10">
+    <DataTable :value="networkPolicies" @row-click="onRowClick">
         <template #empty>{{ $t('networkpolicies.table.no_results') }}</template>
         <template #loading>{{ $t('networkpolicies.table.loading') }}</template>
         <Column field="name" header="Name" />

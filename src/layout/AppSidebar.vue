@@ -1,7 +1,5 @@
 <template>
-    <div class="layout-sidebar">
-        <PanelMenu class=".sidebar-items" :model="items" @item-click="navigateTo" />
-    </div>
+    <PanelMenu class="" :model="items" @item-click="navigateTo" />
 </template>
   
 <script>
@@ -99,10 +97,4 @@ export default {
 </script>
   
 <style scoped>
-.layout-sidebar {
-    z-index: 998;
-    user-select: none;
-    background-color: var(--surface-overlay);
-    box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.02), 0px 0px 2px rgba(0, 0, 0, 0.05), 0px 1px 4px rgba(0, 0, 0, 0.08);
-}
 </style>

@@ -1,7 +1,5 @@
 <template>
-    <div class="app-view">
-        <router-view @context-selected="onContextSelected" @view-logs="$emit('view-logs', $event)" />
-    </div>
+    <router-view @context-selected="onContextSelected" @view-logs="onViewLogs" />
 </template>
   
 <script>
@@ -11,9 +9,11 @@ export default {
             type: Function,
             required: true,
         },
+        onViewLogs: {
+            type: Function,
+            required: true,
+        },
     },
 };
 </script>
-<style>
-</style>
   

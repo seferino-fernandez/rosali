@@ -1,5 +1,5 @@
 <template>
-    <DataTable :value="storageClasses" @row-click="onRowClick" :paginator="true" :rows="10">
+    <DataTable :value="storageClasses" @row-click="onRowClick">
         <template #empty>{{ $t('storageclasses.table.no_results') }}</template>
         <template #loading>{{ $t('storageclasses.table.loading') }}</template>
         <Column field="name" header="Name" />

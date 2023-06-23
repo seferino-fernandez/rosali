@@ -1,5 +1,5 @@
 <template>
-    <DataTable :value="statefulSets" @row-click="onRowClick" :paginator="true" :rows="10">
+    <DataTable :value="statefulSets" @row-click="onRowClick">
         <template #empty>{{ $t('statefulsets.table.no_results') }}</template>
         <template #loading>{{ $t('statefulsets.table.loading') }}</template>
         <Column field="name" header="Name" />

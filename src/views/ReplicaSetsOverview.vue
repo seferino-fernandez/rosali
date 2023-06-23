@@ -1,5 +1,5 @@
 <template>
-    <DataTable :value="replicaSets" @row-click="onRowClick" :paginator="true" :rows="10">
+    <DataTable :value="replicaSets" @row-click="onRowClick">
         <template #empty>{{ $t('replicasets.table.no_results') }}</template>
         <template #loading>{{ $t('replicasets.table.loading') }}</template>
         <Column field="name" header="Name" />
