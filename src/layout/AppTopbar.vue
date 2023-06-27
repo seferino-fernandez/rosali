@@ -1,5 +1,5 @@
 <template>
-    <header class="flex flex-inline align-items-center p-1">
+    <header class="app-topbar">
         <Button class="flex-none m-1" icon="pi pi-home" @click="goToKubeconfigContexts" raised />
         <TabMenu class="flex-grow-1" :model="tabs" @tabChange="onTabChange">
             <template #item="{ item }">
@@ -9,7 +9,7 @@
                 </div>
             </template>
         </TabMenu>
-        <Button class="flex-none m-1" icon="pi pi-search" />
+        <Button class="flex-none m-1" icon="pi pi-cog" />
     </header>
 </template>
   
@@ -75,4 +75,17 @@ export default {
 };
 </script>
   
-<style scoped></style>
+<style scoped>
+
+.app-topbar {
+    display: flex;
+    align-items: center;
+    height: 4rem;
+    background-color: var(--surface-ground);
+    padding: 0 0.25rem;
+    top: 0;
+    width: 100vw;
+    position: fixed;
+    z-index: 5;
+}
+</style>

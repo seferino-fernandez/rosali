@@ -1,12 +1,12 @@
 import { createRouter, createMemoryHistory } from "vue-router";
-import KubeconfigContexts from "@/views/KubeconfigContexts.vue";
-import ClusterOverview from "@/views/ClusterOverview.vue";
+import KubeconfigContexts from "@/views/app/KubeconfigContexts.vue";
+import ClusterOverview from "@/views/cluster/ClusterOverview.vue";
 import ClusterRolesOverview from "@/views/access_control/ClusterRolesOverview.vue";
 import ClusterRoleBindingsOverview from "@/views/access_control/ClusterRoleBindingsOverview.vue";
 import ConfigMapsOverview from "@/views/config_storage/ConfigMapsOverview.vue";
 import CronJobsOverview from "@/views/workloads/CronJobsOverview.vue";
-import DeploymentsOverview from "@/views/DeploymentsOverview.vue";
-import DaemonSetsOverview from "@/views/DaemonSetsOverview.vue";
+import DeploymentsOverview from "@/views/workloads/DeploymentsOverview.vue";
+import DaemonSetsOverview from "@/views/workloads/DaemonSetsOverview.vue";
 import EndpointsOverview from "@/views/networking/EndpointsOverview.vue";
 import IngressesOverview from "@/views/networking/IngressesOverview.vue";
 import IngressClassesOverview from "@/views/networking/IngressClassesOverview.vue";
@@ -15,16 +15,16 @@ import NamespacesOverview from "@/views/cluster/NamespacesOverview.vue";
 import NetworkPoliciesOverview from "@/views/networking/NetworkPoliciesOverview.vue";
 import NodesOverview from "@/views/cluster/NodesOverview.vue";
 import PersistentVolumnClaimsOverview from "@/views/config_storage/PersistentVolumnClaimsOverview.vue";
-import PodsOverview from "@/views/PodsOverview.vue";
+import PodsOverview from "@/views/workloads/PodsOverview.vue";
 import PodLogsView from "@/views/stream_logs/PodLogsView.vue";
-import ReplicaSetsOverview from "@/views/ReplicaSetsOverview.vue";
+import ReplicaSetsOverview from "@/views/workloads/ReplicaSetsOverview.vue";
 import ReplicationControllersOverview from "@/views/workloads/ReplicationControllersOverview.vue";
 import RolesOverview from "@/views/access_control/RolesOverview.vue";
 import RoleBindingsOverview from "@/views/access_control/RoleBindingsOverview.vue";
 import SecretsOverview from "@/views/config_storage/SecretsOverview.vue";
 import ServiceAccountsOverview from "@/views/cluster/ServiceAccountsOverview.vue";
 import ServicesOverview from "@/views/networking/ServicesOverview.vue";
-import StatefulSetsOverview from "@/views/StatefulSetsOverview.vue";
+import StatefulSetsOverview from "@/views/workloads/StatefulSetsOverview.vue";
 import StorageClassesOverview from "@/views/config_storage/StorageClassesOverview.vue";
 
 const routes = [
@@ -170,7 +170,6 @@ const router = createRouter({
   routes,
 });
 
-// Add this beforeEach hook
 router.beforeEach((to, from, next) => {
   if (to.name !== "KubeconfigContexts" && !to.params.id) {
     next({ name: "KubeconfigContexts" });

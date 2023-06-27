@@ -10,7 +10,11 @@
   box-sizing: border-box;
 }
 
-html,
+html {
+  height: 100%;
+  font-size: 14px;
+}
+
 body {
   font-family: var(--font-family);
   color: var(--text-color);

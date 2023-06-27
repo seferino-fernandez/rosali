@@ -7,7 +7,7 @@
     "withGlobalTauri": false
   },
   "package": {
-    "productName": "rosali-app",
+    "productName": "Rosali",
     "version": "0.0.0"
   },
   "tauri": {
@@ -40,7 +40,7 @@
       {
         "fullscreen": false,
         "resizable": true,
-        "title": "rosali-app",
+        "title": "Rosali",
         "width": 1280,
         "height": 720
       }

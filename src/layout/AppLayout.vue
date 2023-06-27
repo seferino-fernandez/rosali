@@ -1,13 +1,9 @@
 <template>
-  <div class="flex flex-column max-w-screen max-h-screen">
+  <div class="flex flex-column w-screen h-screen">
     <AppTopbar :tabs="tabs" />
-    <div class="flex flex-inline">
-      <div class="flex-none">
-        <AppSidebar v-show="showSidebar" />
-      </div>
-      <div class="flex-grow-1">
-        <AppView @context-selected="addClusterTab" @view-logs="addLogTab" />
-      </div>
+    <div class="flex flex-grow mt-6">
+      <AppSidebar v-show="showSidebar" />
+      <AppMainView @context-selected="addClusterTab" @view-logs="addLogTab" />
     </div>
   </div>
 </template>
@@ -15,7 +11,7 @@
 <script>
 import AppTopbar from "./AppTopbar.vue";
 import AppSidebar from "./AppSidebar.vue";
-import AppView from "./AppView.vue";
+import AppMainView from "./AppMainView.vue";
 import { ref, computed, provide } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { invoke } from "@tauri-apps/api";
@@ -24,7 +20,7 @@ export default {
   components: {
     AppTopbar,
     AppSidebar,
-    AppView,
+    AppMainView,
   },
   setup() {
     const tabs = ref([]);

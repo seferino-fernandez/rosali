@@ -1,20 +1,20 @@
 <template>
-    <div class="">
-        <div class="flex flex-inline p-4">
+    <div class="overflow-auto">
+        <div class="flex flex-inline justify-content-center p-4">
             <div class="flex-column">
                 <div class="text-base text-color text-center font-bold">{{ $t('cluster_overview.deployments') }}</div>
-                <Chart type="doughnut" :data="deploymentChartData" />
+                <Chart class="w-15rem h-15rem" type="doughnut" :data="deploymentChartData" />
             </div>
             <div class="flex-column">
                 <div class="text-base text-color text-center font-bold">{{ $t('cluster_overview.pods') }}</div>
-                <Chart type="doughnut" :data="podChartData" />
+                <Chart class="w-15rem h-15rem" type="doughnut" :data="podChartData" />
             </div>
             <div class="flex-column">
                 <div class="text-base text-color text-center font-bold">{{ $t('cluster_overview.replica_sets') }}</div>
-                <Chart type="doughnut" :data="replicaSetChartData" />
+                <Chart class="w-15rem h-15rem" type="doughnut" :data="replicaSetChartData" />
             </div>
         </div>
-        <DataTable tableStyle="min-width: 50rem" :value="recentEvents" scrollable scrollHeight="flex">
+        <DataTable scrollable class="p-datatable-sm" :value="recentEvents">
             <template #header>
                 <div class="">
                     <span class="text-base text-color font-bold">{{ $t('cluster_overview.recent_events', 2) }}</span>

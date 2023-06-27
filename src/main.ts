@@ -1,6 +1,6 @@
 import "primeflex/primeflex.css";
 import "primeicons/primeicons.css";
-import "primevue/resources/themes/tailwind-light/theme.css";
+import "primevue/resources/themes/bootstrap4-dark-blue/theme.css";
 import "primevue/resources/primevue.min.css";
 import "highlight.js/lib/common";
 import "@/styles.css";
