@@ -1,5 +1,5 @@
 <template>
-    <DataTable :value="secrets" @row-click="onRowClick" :paginator="true" :rows="10">
+    <DataTable :value="secrets" @row-click="onRowClick">
         <template #empty>{{ $t('secrets.table.no_results') }}</template>
         <template #loading>{{ $t('secrets.table.loading') }}</template>
         <Column field="name" header="Name" />

@@ -18,7 +18,7 @@
         <Sidebar v-model:visible="showDetails" position="right">
             <template #header>
                 <h3>{{ selectedPod.name }}</h3>
-                <Button :label="$t('kubernetes.pod', 2)" icon="pi pi-file" class="p-mr-2" @click="viewLogs" />
+                <Button :label="$t('kubernetes.log', 2)" icon="pi pi-file" class="p-mr-2" @click="viewLogs" />
                 <Divider />
             </template>
         </Sidebar>
@@ -95,8 +95,4 @@ export default {
     },
 };
 </script>
-<style scoped>
-.pod-overview {
-    padding: 1rem;
-}
-</style>
+<style scoped></style>

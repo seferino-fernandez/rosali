@@ -1,5 +1,5 @@
 <template>
-    <DataTable :value="cronJobs" @row-click="onRowClick" :paginator="true" :rows="10">
+    <DataTable :value="cronJobs" @row-click="onRowClick">
         <template #empty>{{ $t('cronjobs.table.no_results') }}</template>
         <template #loading>{{ $t('cronjobs.table.loading') }}</template>
         <Column field="name" header="Name" />

@@ -1,10 +1,10 @@
 <template>
-    <DataTable :value="roleBindings" @row-click="onRowClick" :paginator="true" :rows="10">
+    <DataTable :value="roleBindings" @row-click="onRowClick">
         <template #empty>{{ $t('rolebindings.table.no_results') }}</template>
         <template #loading>{{ $t('rolebindings.table.loading') }}</template>
         <Column field="name" header="Name" />
         <Column field="namespace" header="Name" />
-        <Column field="bindings" header="Bindings" :body="bindingsTemplate"/>
+        <Column field="bindings" header="Bindings" :body="bindingsTemplate" />
         <Column field="age" header="Age" />
     </DataTable>
 </template>

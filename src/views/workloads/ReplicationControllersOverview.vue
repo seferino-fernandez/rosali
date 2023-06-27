@@ -1,5 +1,5 @@
 <template>
-    <DataTable :value="replicationControllers" @row-click="onRowClick" :paginator="true" :rows="10">
+    <DataTable :value="replicationControllers" @row-click="onRowClick">
         <template #empty>{{ $t('replicationcontrollers.table.no_results') }}</template>
         <template #loading>{{ $t('replicationcontrollers.table.loading') }}</template>
         <Column field="name" header="Name" />

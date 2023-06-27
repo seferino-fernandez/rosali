@@ -1,5 +1,5 @@
 <template>
-    <DataTable :value="ingressClasses" @row-click="onRowClick" :paginator="true" :rows="10">
+    <DataTable :value="ingressClasses" @row-click="onRowClick">
         <template #empty>{{ $t('ingress_classes.table.no_results') }}</template>
         <template #loading>{{ $t('ingress_classes.table.loading') }}</template>
         <Column field="name" header="Name" />

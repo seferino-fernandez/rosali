@@ -1,12 +1,14 @@
 <template>
-    <DataTable :value="replicaSets" @row-click="onRowClick" :paginator="true" :rows="10">
-        <template #empty>{{ $t('replicasets.table.no_results') }}</template>
-        <template #loading>{{ $t('replicasets.table.loading') }}</template>
+    <DataTable :value="daemonSets" @row-click="onRowClick">
+        <template #empty>{{ $t('daemonsets.table.no_results') }}</template>
+        <template #loading>{{ $t('daemonsets.table.loading') }}</template>
         <Column field="name" header="Name" />
         <Column field="namespace" header="Namespace" />
         <Column field="desired" header="Desired" />
         <Column field="current" header="Current" />
         <Column field="ready" header="Ready" />
+        <Column field="up_to_date" header="Up to Date" />
+        <Column field="available" header="Available" />
         <Column field="age" header="Age" />
     </DataTable>
 </template>
@@ -25,32 +27,32 @@ export default {
     },
     setup() {
         const route = useRoute();
-        const replicaSets = ref([]);
-        const selectedReplicaSet = ref({});
+        const daemonSets = ref([]);
+        const selectedDaemonSet = ref({});
         const clusterConnectionId = ref(route.params.id);
 
         onMounted(async () => {
             try {
-                fetchReplicaSets();
+                fetchDaemonSets();
             } catch (error) {
-                console.error("Error fetching replica sets data:", error);
+                console.error("Error fetching daemon sets data:", error);
             }
         });
 
-        const fetchReplicaSets = async () => {
-            const response = await invoke("get_replicasets_command", { id: clusterConnectionId.value });
-            replicaSets.value = response.data;
+        const fetchDaemonSets = async () => {
+            const response = await invoke("get_daemonsets_command", { id: clusterConnectionId.value });
+            daemonSets.value = response.data;
         };
 
         const onRowClick = (e) => {
-            selectedReplicaSet.value = e.data;
+            selectedDaemonSet.value = e.data;
         };
 
         return {
-            replicaSets,
-            fetchReplicaSets,
+            daemonSets,
+            fetchDaemonSets,
             onRowClick,
-            selectedReplicaSet,
+            selectedDaemonSet,
         };
     },
 };

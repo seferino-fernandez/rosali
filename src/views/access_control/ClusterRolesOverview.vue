@@ -1,5 +1,5 @@
 <template>
-    <DataTable :value="clusterRoles" @row-click="onRowClick" :paginator="true" :rows="10">
+    <DataTable :value="clusterRoles" @row-click="onRowClick">
         <template #empty>{{ $t('clusterroles.table.no_results') }}</template>
         <template #loading>{{ $t('clusterroles.table.loading') }}</template>
         <Column field="name" header="Name" />

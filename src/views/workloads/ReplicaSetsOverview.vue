@@ -1,11 +1,12 @@
 <template>
-    <DataTable :value="statefulSets" @row-click="onRowClick" :paginator="true" :rows="10">
-        <template #empty>{{ $t('statefulsets.table.no_results') }}</template>
-        <template #loading>{{ $t('statefulsets.table.loading') }}</template>
+    <DataTable :value="replicaSets" @row-click="onRowClick">
+        <template #empty>{{ $t('replicasets.table.no_results') }}</template>
+        <template #loading>{{ $t('replicasets.table.loading') }}</template>
         <Column field="name" header="Name" />
         <Column field="namespace" header="Namespace" />
+        <Column field="desired" header="Desired" />
+        <Column field="current" header="Current" />
         <Column field="ready" header="Ready" />
-        <Column field="service" header="Service" />
         <Column field="age" header="Age" />
     </DataTable>
 </template>
@@ -24,32 +25,32 @@ export default {
     },
     setup() {
         const route = useRoute();
-        const statefulSets = ref([]);
-        const selectedStatefulSet = ref({});
+        const replicaSets = ref([]);
+        const selectedReplicaSet = ref({});
         const clusterConnectionId = ref(route.params.id);
 
         onMounted(async () => {
             try {
-                fetchStatefulSets();
+                fetchReplicaSets();
             } catch (error) {
-                console.error("Error fetching stateful sets data:", error);
+                console.error("Error fetching replica sets data:", error);
             }
         });
 
-        const fetchStatefulSets = async () => {
-            const response = await invoke("get_statefulsets_command", { id: clusterConnectionId.value });
-            statefulSets.value = response.data;
+        const fetchReplicaSets = async () => {
+            const response = await invoke("get_replicasets_command", { id: clusterConnectionId.value });
+            replicaSets.value = response.data;
         };
 
         const onRowClick = (e) => {
-            selectedStatefulSet.value = e.data;
+            selectedReplicaSet.value = e.data;
         };
 
         return {
-            statefulSets,
-            fetchStatefulSets,
+            replicaSets,
+            fetchReplicaSets,
             onRowClick,
-            selectedStatefulSet,
+            selectedReplicaSet,
         };
     },
 };

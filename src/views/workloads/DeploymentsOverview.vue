@@ -1,5 +1,5 @@
 <template>
-    <DataTable :value="deployments" @row-click="onRowClick" :paginator="true" :rows="10">
+    <DataTable :value="deployments" @row-click="onRowClick">
         <Column field="name" header="Name" />
         <Column field="namespace" header="Namespace" />
         <Column field="status.replicas" header="Replicas" />

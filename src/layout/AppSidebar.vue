@@ -1,6 +1,6 @@
 <template>
-    <div class="layout-sidebar">
-        <PanelMenu class=".sidebar-items" :model="items" @item-click="navigateTo" />
+    <div class="app-sidebar">
+        <PanelMenu class="m-0 border-none" v-model:expandedKeys="expandedKeys" :model="items" @item-click="navigateTo" />
     </div>
 </template>
   
@@ -8,17 +8,16 @@
 import { computed, onMounted, watch, ref } from "vue";
 import { useRouter } from "vue-router";
 import PanelMenu from "primevue/panelmenu";
-import ScrollPanel from "primevue/scrollpanel";
 
 
 export default {
     components: {
         PanelMenu,
-        ScrollPanel,
     },
     setup() {
         const router = useRouter();
 
+        const expandedKeys = ref({});
         const currentId = ref("");
         const items = ref([]);
 
@@ -30,52 +29,58 @@ export default {
                 currentId.value = router.currentRoute.value.name !== "KubeconfigContexts" ? router.currentRoute.value.params.id : "";
                 items.value = [
                     {
+                        key: "0",
                         label: "Workloads",
                         items: [
-                            { label: "Pods", to: currentId.value ? { name: "PodsOverview", params: { id: currentId.value } } : homePage },
-                            { label: "Deployments", to: currentId.value ? { name: "DeploymentsOverview", params: { id: currentId.value } } : homePage },
-                            { label: "Jobs", to: currentId.value ? { name: "JobsOverview", params: { id: currentId.value } } : homePage },
-                            { label: "Cron Jobs", to: currentId.value ? { name: "CronJobsOverview", params: { id: currentId.value } } : homePage },
-                            { label: "Daemon Sets", to: currentId.value ? { name: "DaemonSetsOverview", params: { id: currentId.value } } : homePage },
-                            { label: "Replica Sets", to: currentId.value ? { name: "ReplicaSetsOverview", params: { id: currentId.value } } : homePage },
-                            { label: "Stateful Sets", to: currentId.value ? { name: "StatefulSetsOverview", params: { id: currentId.value } } : homePage },
-                            { label: "Replication Controllers", to: currentId.value ? { name: "ReplicationControllersOverview", params: { id: currentId.value } } : homePage },
+                            { key: "0_0", label: "Pods", to: currentId.value ? { name: "PodsOverview", params: { id: currentId.value } } : homePage },
+                            { key: "0_1", label: "Deployments", to: currentId.value ? { name: "DeploymentsOverview", params: { id: currentId.value } } : homePage },
+                            { key: "0_2", label: "Jobs", to: currentId.value ? { name: "JobsOverview", params: { id: currentId.value } } : homePage },
+                            { key: "0_3", label: "Cron Jobs", to: currentId.value ? { name: "CronJobsOverview", params: { id: currentId.value } } : homePage },
+                            { key: "0_4", label: "Daemon Sets", to: currentId.value ? { name: "DaemonSetsOverview", params: { id: currentId.value } } : homePage },
+                            { key: "0_5", label: "Replica Sets", to: currentId.value ? { name: "ReplicaSetsOverview", params: { id: currentId.value } } : homePage },
+                            { key: "0_6", label: "Stateful Sets", to: currentId.value ? { name: "StatefulSetsOverview", params: { id: currentId.value } } : homePage },
+                            { key: "0_7", label: "Replication Controllers", to: currentId.value ? { name: "ReplicationControllersOverview", params: { id: currentId.value } } : homePage },
                         ],
                     },
                     {
+                        key: "1",
                         label: "Networking",
                         items: [
-                            { label: "Services", to: currentId.value ? { name: "ServicesOverview", params: { id: currentId.value } } : homePage },
-                            { label: "Endpoints", to: currentId.value ? { name: "EndpointsOverview", params: { id: currentId.value } } : homePage },
-                            { label: "Ingresses", to: currentId.value ? { name: "IngressesOverview", params: { id: currentId.value } } : homePage },
-                            { label: "Ingress Classes", to: currentId.value ? { name: "IngressClassesOverview", params: { id: currentId.value } } : homePage },
-                            { label: "Network Policies", to: currentId.value ? { name: "NetworkPoliciesOverview", params: { id: currentId.value } } : homePage },
+                            { key: "1_0", label: "Services", to: currentId.value ? { name: "ServicesOverview", params: { id: currentId.value } } : homePage },
+                            { key: "1_1", label: "Endpoints", to: currentId.value ? { name: "EndpointsOverview", params: { id: currentId.value } } : homePage },
+                            { key: "1_2", label: "Ingresses", to: currentId.value ? { name: "IngressesOverview", params: { id: currentId.value } } : homePage },
+                            { key: "1_3", label: "Ingress Classes", to: currentId.value ? { name: "IngressClassesOverview", params: { id: currentId.value } } : homePage },
+                            { key: "1_4", label: "Network Policies", to: currentId.value ? { name: "NetworkPoliciesOverview", params: { id: currentId.value } } : homePage },
                         ],
                     },
                     {
+                        key: "2",
                         label: "Config and Storage",
                         items: [
-                            { label: "Config Maps", to: currentId.value ? { name: "ConfigMapsOverview", params: { id: currentId.value } } : homePage },
-                            { label: "Secrets", to: currentId.value ? { name: "SecretsOverview", params: { id: currentId.value } } : homePage },
-                            { label: "Persistent Volumn Claims", to: currentId.value ? { name: "PersistentVolumnClaimsOverview", params: { id: currentId.value } } : homePage },
-                            { label: "Storage Classes", to: currentId.value ? { name: "StorageClassesOverview", params: { id: currentId.value } } : homePage },
+                            { key: "2_0", label: "Config Maps", to: currentId.value ? { name: "ConfigMapsOverview", params: { id: currentId.value } } : homePage },
+                            { key: "2_1", label: "Secrets", to: currentId.value ? { name: "SecretsOverview", params: { id: currentId.value } } : homePage },
+                            { key: "2_2", label: "Persistent Volumn Claims", to: currentId.value ? { name: "PersistentVolumnClaimsOverview", params: { id: currentId.value } } : homePage },
+                            { key: "2_3", label: "Storage Classes", to: currentId.value ? { name: "StorageClassesOverview", params: { id: currentId.value } } : homePage },
                         ],
                     },
                     {
+                        key: "3",
                         label: "Cluster",
                         items: [
-                            { label: "Namespaces", to: currentId.value ? { name: "NamespacesOverview", params: { id: currentId.value } } : homePage },
-                            { label: "Nodes", to: currentId.value ? { name: "NodesOverview", params: { id: currentId.value } } : homePage },
-                            { label: "Service Accounts", to: currentId.value ? { name: "ServiceAccountsOverview", params: { id: currentId.value } } : homePage },
+                            { key: "3_0", label: "Overview", to: currentId.value ? { name: "ClusterOverview", params: { id: currentId.value } } : homePage },
+                            { key: "3_1", label: "Namespaces", to: currentId.value ? { name: "NamespacesOverview", params: { id: currentId.value } } : homePage },
+                            { key: "3_2", label: "Nodes", to: currentId.value ? { name: "NodesOverview", params: { id: currentId.value } } : homePage },
+                            { key: "3_3", label: "Service Accounts", to: currentId.value ? { name: "ServiceAccountsOverview", params: { id: currentId.value } } : homePage },
                         ],
                     },
                     {
+                        key: "4",
                         label: "Access Control",
                         items: [
-                            { label: "Cluster Roles", to: currentId.value ? { name: "ClusterRolesOverview", params: { id: currentId.value } } : homePage },
-                            { label: "Cluster Role Bindings", to: currentId.value ? { name: "ClusterRoleBindingsOverview", params: { id: currentId.value } } : homePage },
-                            { label: "Roles", to: currentId.value ? { name: "RolesOverview", params: { id: currentId.value } } : homePage },
-                            { label: "Role Bindings", to: currentId.value ? { name: "RoleBindingsOverview", params: { id: currentId.value } } : homePage },
+                            { key: "4_0", label: "Cluster Roles", to: currentId.value ? { name: "ClusterRolesOverview", params: { id: currentId.value } } : homePage },
+                            { key: "4_1", label: "Cluster Role Bindings", to: currentId.value ? { name: "ClusterRoleBindingsOverview", params: { id: currentId.value } } : homePage },
+                            { key: "4_2", label: "Roles", to: currentId.value ? { name: "RolesOverview", params: { id: currentId.value } } : homePage },
+                            { key: "4_3", label: "Role Bindings", to: currentId.value ? { name: "RoleBindingsOverview", params: { id: currentId.value } } : homePage },
                         ],
                     },
                 ];
@@ -93,16 +98,24 @@ export default {
             visible: false,
             items: items,
             navigateTo,
+            expandedKeys,
         };
     },
 };
 </script>
   
 <style scoped>
-.layout-sidebar {
-    z-index: 998;
+.app-sidebar {
+    display: flex;
+    background-color: var(--surface-ground);
+    position: fixed;
+    left: 0;
+    width: 190px;
+    height: 100vh;
+    z-index: 4;
+    top: 4rem;
+    height: calc(100vh - 4rem);
+    overflow-y: auto;
     user-select: none;
-    background-color: var(--surface-overlay);
-    box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.02), 0px 0px 2px rgba(0, 0, 0, 0.05), 0px 1px 4px rgba(0, 0, 0, 0.08);
 }
 </style>
