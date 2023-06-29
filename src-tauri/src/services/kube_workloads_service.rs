@@ -8,6 +8,7 @@ use uuid::Uuid;
 use crate::cluster_connections::{ClusterConnection, ClusterConnections};
 use crate::common::response::Response;
 use crate::kube_clients::kube_workloads_client;
+use crate::kube_model::connection_details::ConnectionDetails;
 use crate::kube_model::cronjobs::KubeCronJob;
 use crate::kube_model::daemonsets::KubeDaemonSet;
 use crate::kube_model::deployments::KubeDeployment;
@@ -71,7 +72,7 @@ pub async fn add_cluster_connection(
     connections: State<'_, std::sync::Arc<Mutex<ClusterConnections>>>,
     context_name: String,
     context_path: Option<String>,
-) -> Result<Response<String>, ()> {
+) -> Result<Response<ConnectionDetails>, ()> {
     let kubeconfig_path =
         context_path.unwrap_or_else(|| match find_kubeconfig_for_context(&context_name) {
             Ok(path) => path,
@@ -84,9 +85,9 @@ pub async fn add_cluster_connection(
         });
 
     match add_cluster_to_connections(&connections, &context_name, &kubeconfig_path).await {
-        Ok(connection_id) => Ok(Response {
+        Ok(connection_details) => Ok(Response {
             success: true,
-            data: Some(connection_id),
+            data: Some(connection_details),
             error: None,
         }),
         Err(e) => Ok(Response {
@@ -97,12 +98,11 @@ pub async fn add_cluster_connection(
     }
 }
 
-// This is a private helper function that adds a cluster to connections.
 async fn add_cluster_to_connections(
     connections: &Arc<Mutex<ClusterConnections>>,
     context_name: &str,
     kubeconfig_path: &str,
-) -> Result<String, String> {
+) -> Result<ConnectionDetails, String> {
     let kubeconfig: Kubeconfig = kubeconfig::parse_kubeconfig(kubeconfig_path).map_err(|e| {
         format!(
             "Failed to parse kubeconfig with context {}: {}",
@@ -121,10 +121,18 @@ async fn add_cluster_to_connections(
         .map_err(|_| format!("Failed to create kube::Client for context {}", context_name))?;
 
     let connection_id = Uuid::new_v4().to_string();
-    let connection = ClusterConnection::new(connection_id.clone(), client);
+    let connection = ClusterConnection::new(connection_id.clone(), client.clone());
 
     connections.lock().await.add_connection(connection);
-    Ok(connection_id)
+
+    let connection_details = ConnectionDetails {
+        connection_id: connection_id.clone(),
+        name: context_name.to_string(),
+        path: kubeconfig_path.to_string(),
+        namespace: client.default_namespace().to_string(),
+    };
+
+    Ok(connection_details)
 }
 
 pub async fn remove_cluster_connection(

@@ -61,17 +61,16 @@ export default {
         const router = useRouter();
         const route = useRoute();
         const clusterConnectionId = ref(route.params.id);
+        const clusterNamespace = ref(route.query.namespace);
         const recentEvents = ref([]);
 
         const deploymentChartData = ref({});
         const podChartData = ref({});
         const replicaSetChartData = ref({});
 
-        const connectionId = ref("");
-
         onMounted(async () => {
             try {
-                const response = await invoke("get_context_overview", { id: clusterConnectionId.value });
+                const response = await invoke("get_context_overview", { id: clusterConnectionId.value, namespace: clusterNamespace.value });
                 let clusterStatusOverview = response.data;
                 const recentEventsResponse = await invoke("get_recent_events_command", { id: clusterConnectionId.value });
                 if (recentEventsResponse == null || recentEventsResponse.data == null) {
@@ -123,11 +122,11 @@ export default {
 
         return {
             clusterConnectionId,
+            clusterNamespace,
             deploymentChartData,
             podChartData,
             replicaSetChartData,
             recentEvents,
-            connectionId
         };
     },
 };

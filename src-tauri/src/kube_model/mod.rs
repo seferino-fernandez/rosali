@@ -2,6 +2,7 @@ pub mod base;
 pub mod clusterrolebindings;
 pub mod clusterroles;
 pub mod configmap;
+pub mod connection_details;
 pub mod cronjobs;
 pub mod daemonsets;
 pub mod deployments;

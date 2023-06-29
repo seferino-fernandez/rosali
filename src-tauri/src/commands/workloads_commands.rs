@@ -3,6 +3,7 @@ use tauri::{State, Window};
 use tokio::sync::Mutex;
 
 use crate::common::response::Response;
+use crate::kube_model::connection_details::ConnectionDetails;
 use crate::{
     cluster_connections::ClusterConnections,
     kube_model::{
@@ -29,7 +30,7 @@ pub async fn add_cluster_connection(
     connections: State<'_, Arc<Mutex<ClusterConnections>>>,
     context_name: String,
     context_path: Option<String>,
-) -> Result<Response<String>, ()> {
+) -> Result<Response<ConnectionDetails>, ()> {
     kube_workloads_service::add_cluster_connection(connections, context_name, context_path).await
 }
 

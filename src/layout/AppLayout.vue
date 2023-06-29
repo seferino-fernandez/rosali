@@ -38,11 +38,12 @@ export default {
         router.push(tabs.value[tabIndex]);
       } else {
         let clusterConnectionResponse = await invoke("add_cluster_connection", { "contextName": label, "contextPath": path });
-        let id = clusterConnectionResponse.data;
+        let id = clusterConnectionResponse.data.connection_id;
+        let namespace = clusterConnectionResponse.data.namespace;
         params.id = id;
-        let newTab = { type: TAB_TYPE_CLUSTER, id, path, label, name, params, };
+        let newTab = { type: TAB_TYPE_CLUSTER, id, path, label, name, params };
         tabs.value.push(newTab);
-        router.push(newTab);
+        router.push({ name, params, query: { namespace } });
       }
     }
 
