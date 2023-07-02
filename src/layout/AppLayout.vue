@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-column w-screen h-screen">
     <AppTopbar :tabs="tabs" />
-    <div class="flex flex-grow mt-6">
+    <div class="flex flex-grow mt-7">
       <AppSidebar v-show="showSidebar" />
       <AppMainView @context-selected="addClusterTab" @view-logs="addLogTab" />
     </div>

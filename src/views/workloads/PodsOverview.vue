@@ -10,7 +10,7 @@
             </template>
             <Column field="name" :header="$t('kubernetes.meta.name', 1)" />
             <Column field="namespace" :header="$t('kubernetes.namespace', 1)" />
-            <Column field="status" :header="$t('kubernetes.meta.status', 1)" />
+            <Column field="status" :header="$t('kubernetes.meta.status.label')" />
             <Column field="restarts" :header="$t('kubernetes.meta.restart', 2)" />
             <Column field="age" :header="$t('kubernetes.meta.age')" />
         </DataTable>

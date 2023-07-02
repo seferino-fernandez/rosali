@@ -1,0 +1,181 @@
+{
+  "cluster_overview": {
+    "recent_events": "Recent Events"
+  },
+  "clusterrolebindings": {
+    "table": {
+      "loading": "Loading Cluster Role Bindings...",
+      "no_results": "No Cluster Role Bindings found."
+    }
+  },
+  "clusterroles": {
+    "table": {
+      "loading": "Loading Cluster Roles...",
+      "no_results": "No Cluster Roles found."
+    }
+  },
+  "configmaps": {
+    "table": {
+      "loading": "Loading Config Maps...",
+      "no_results": "No Config Maps found."
+    }
+  },
+  "cronjobs": {
+    "table": {
+      "loading": "Loading Cron Jobs...",
+      "no_results": "No Cron Jobs found."
+    }
+  },
+  "daemonsets": {
+    "table": {
+      "loading": "Loading Daemon Sets...",
+      "no_results": "No Daemon Sets found."
+    }
+  },
+  "endpoints": {
+    "table": {
+      "loading": "Loading Endpoints...",
+      "no_results": "No Endpoints found."
+    }
+  },
+  "events": {
+    "count": "Count",
+    "first_time": "First Time",
+    "last_time": "Last Time",
+    "message": "Message",
+    "reason": "Reason",
+    "source": "Source",
+    "table": {
+      "loading": "Loading events...",
+      "no_results": "No events found."
+    },
+    "type": "Type"
+  },
+  "ingress_classes": {
+    "table": {
+      "loading": "Loading Ingress Classes...",
+      "no_results": "No Ingress Classes found."
+    }
+  },
+  "ingresses": {
+    "table": {
+      "loading": "Loading Ingresses...",
+      "no_results": "No Ingresses found."
+    }
+  },
+  "jobs": {
+    "table": {
+      "loading": "Loading Jobs...",
+      "no_results": "No Jobs found."
+    }
+  },
+  "kubeconfig": {
+    "table": {
+      "cluster": "Cluster",
+      "header": "Kubeconfig Contexts",
+      "loading": "Loading Kubernetes contexts...",
+      "name": "Name",
+      "namespace": "Namespace",
+      "no_results": "No Kubernetes contexts found.",
+      "path": "Path",
+      "user": "User"
+    }
+  },
+  "kubernetes": {
+    "cluster": "Cluster | Clusters",
+    "deployment": "Deployment | Deployments",
+    "log": "Log | Logs",
+    "meta": {
+      "age": "Age",
+      "name": "Name",
+      "restart": "Restart | Restarts",
+      "status": {
+        "failed": "{count} Failed",
+        "label": "Status",
+        "running": "{count} Running"
+      }
+    },
+    "namespace": "Namespace | Namespaces",
+    "pod": "Pod | Pods",
+    "replica_set": "Replica Set | Replica Sets",
+    "type": "Type"
+  },
+  "namespaces": {
+    "table": {
+      "loading": "Loading Namespaces...",
+      "no_results": "No Namespaces found."
+    }
+  },
+  "networkpolicies": {
+    "table": {
+      "loading": "Loading Network Policies...",
+      "no_results": "No Network Policies found."
+    }
+  },
+  "nodes": {
+    "table": {
+      "loading": "Loading Nodes...",
+      "no_results": "No Nodes found."
+    }
+  },
+  "persistent_volume_claims": {
+    "table": {
+      "loading": "Loading Persistent Volumn Claims...",
+      "no_results": "No Persistent Volumn Claims found."
+    }
+  },
+  "replicasets": {
+    "table": {
+      "loading": "Loading Replica Sets...",
+      "no_results": "No Replica Sets found."
+    }
+  },
+  "replicationcontrollers": {
+    "table": {
+      "loading": "Loading Replication Controllers...",
+      "no_results": "No Replication Controllers found."
+    }
+  },
+  "rolebindings": {
+    "table": {
+      "loading": "Loading Cluster Role Bindings...",
+      "no_results": "No Role Bindings found."
+    }
+  },
+  "roles": {
+    "table": {
+      "loading": "Loading Cluster Roles...",
+      "no_results": "No Roles found."
+    }
+  },
+  "secrets": {
+    "table": {
+      "loading": "Loading Secrets...",
+      "no_results": "No Secrets found."
+    }
+  },
+  "serviceaccounts": {
+    "table": {
+      "loading": "Loading Service Accounts...",
+      "no_results": "No Service Accounts found."
+    }
+  },
+  "services": {
+    "table": {
+      "loading": "Loading Services...",
+      "no_results": "No Services found."
+    }
+  },
+  "statefulsets": {
+    "table": {
+      "loading": "Loading Stateful Sets...",
+      "no_results": "No Stateful Sets found."
+    }
+  },
+  "storageclasses": {
+    "table": {
+      "loading": "Loading Storage Classes...",
+      "no_results": "No Storage Classes found."
+    }
+  }
+}

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <DataTable v-model:filters="filters" :value="contexts" @row-click="onRowClick" :selection-mode="'single'"
+    <DataTable class="p-datatable-sm" v-model:filters="filters" :value="contexts" @row-click="onRowClick" :selection-mode="'single'"
       filterDisplay="row" :globalFilterFields="['name', 'path', 'cluster', 'user', 'namespace']" scrollable
       scrollHeight="flex">
       <template #header>

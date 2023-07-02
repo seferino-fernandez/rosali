@@ -56,8 +56,7 @@ export default {
             const response = await invoke("restart_deployment_command", { id: clusterConnectionId.value, name: rowData.name, namespace: rowData.namespace });
         };
 
-        const deleteDeployment = (rowData) => {
-            // delete operation here
+        const deleteDeployment = async (rowData) => {
         };
 
         return {
