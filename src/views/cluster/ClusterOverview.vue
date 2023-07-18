@@ -35,6 +35,7 @@
             <Column field="count" :header="$t('events.count')"></Column>
             <Column field="first_time" :header="$t('events.first_time')"></Column>
             <Column field="last_time" :header="$t('events.last_time')"></Column>
+            <template #footer />
             <template #empty>{{ $t('events.table.no_results') }}</template>
             <template #loading>{{ $t('events.table.loading') }}</template>
         </DataTable>

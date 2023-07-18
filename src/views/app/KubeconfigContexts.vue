@@ -1,14 +1,14 @@
 <template>
   <div>
-    <DataTable class="p-datatable-sm" v-model:filters="filters" :value="contexts" @row-click="onRowClick" :selection-mode="'single'"
-      filterDisplay="row" :globalFilterFields="['name', 'path', 'cluster', 'user', 'namespace']" scrollable
+    <DataTable class="" v-model:filters="filters" :value="contexts" @row-click="onRowClick" :selection-mode="'single'"
+      filterDisplay="row" stripedRows :globalFilterFields="['name', 'path', 'cluster', 'user', 'namespace']" scrollable
       scrollHeight="flex">
       <template #header>
-        <div class="flex justify-content-between">
+        <div class="flex justify-content-between align-items-center">
           <span class="">{{ $t('kubeconfig.table.header') }}</span>
           <span class="p-input-icon-left">
             <i class="pi pi-search" />
-            <InputText v-model="filters['global'].value" placeholder="Search" />
+            <InputText v-model="filters['global'].value" :placeholder="$t('actions.search')" />
           </span>
         </div>
       </template>
@@ -39,6 +39,7 @@
           {{ data.namespace }}
         </template>
       </Column>
+      <template #footer />
     </DataTable>
   </div>
 </template>
@@ -101,6 +102,4 @@ export default {
   },
 };
 </script>
-<style scoped>
-</style>
   

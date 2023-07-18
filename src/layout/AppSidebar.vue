@@ -1,6 +1,7 @@
 <template>
     <div class="app-sidebar">
-        <PanelMenu class="m-0 border-none" v-model:expandedKeys="expandedKeys" :model="items" @item-click="navigateTo" />
+        <PanelMenu class="m-0 border-none surface-ground" v-model:expandedKeys="expandedKeys" :model="items"
+            @item-click="navigateTo" />
     </div>
 </template>
   
