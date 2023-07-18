@@ -16,7 +16,6 @@ import NetworkPoliciesOverview from "@/views/networking/NetworkPoliciesOverview.
 import NodesOverview from "@/views/cluster/NodesOverview.vue";
 import PersistentVolumnClaimsOverview from "@/views/config_storage/PersistentVolumnClaimsOverview.vue";
 import PodsOverview from "@/views/workloads/PodsOverview.vue";
-import PodLogsView from "@/views/stream_logs/PodLogsView.vue";
 import ReplicaSetsOverview from "@/views/workloads/ReplicaSetsOverview.vue";
 import ReplicationControllersOverview from "@/views/workloads/ReplicationControllersOverview.vue";
 import RolesOverview from "@/views/access_control/RolesOverview.vue";
@@ -62,11 +61,6 @@ const routes = [
     path: "/pods-overview/:id",
     name: "PodsOverview",
     component: PodsOverview,
-  },
-  {
-    path: "/cluster/:id/namespaces/:podNamespace/pod/:podName/logs",
-    name: "PodLogsView",
-    component: PodLogsView,
   },
   {
     path: "/deployments-overview/:id",
