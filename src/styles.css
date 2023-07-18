@@ -30,7 +30,39 @@ a {
   text-decoration: none;
 }
 
+.p-panelmenu .p-panelmenu-content {
+  background: var(--surface-ground) !important;
+}
+
+.p-panelmenu .p-panelmenu-panel {
+  border: none;
+  box-shadow: none;
+  background: var(--surface-ground) !important;
+}
+
+.p-panelmenu .p-panelmenu-header .p-panelmenu-header-content .p-panelmenu-header-action {
+  background: var(--surface-ground) !important;
+}
+
+.p-datatable-header {
+  border-top-left-radius: var(--border-radius);
+  border-top-right-radius: var(--border-radius);
+}
+
+.p-datatable-footer {
+  border-bottom-left-radius: var(--border-radius);
+  border-bottom-right-radius: var(--border-radius);
+}
+
 .p-tabmenu .p-tabmenu-nav {
   background: transparent;
   border: none;
+}
+
+.p-rowgroup-header td {
+  border: none !important;
+}
+
+td {
+  border: none !important;
 }

@@ -1,4 +1,10 @@
 {
+  "actions": {
+    "delete": "Delete",
+    "edit": "Edit",
+    "view_logs": "View Logs",
+    "search": "Search"
+  },
   "cluster_overview": {
     "recent_events": "Recent Events"
   },
@@ -82,12 +88,18 @@
     }
   },
   "kubernetes": {
+    "annotation": "Annotation | Annotations",
     "cluster": "Cluster | Clusters",
     "deployment": "Deployment | Deployments",
+    "label": "Label | Labels",
     "log": "Log | Logs",
     "meta": {
+      "created": "Created",
+      "label": "Metadata",
       "age": "Age",
+      "qos": "QoS",
       "name": "Name",
+      "owner_reference": "Owner Reference | Owner References",
       "restart": "Restart | Restarts",
       "status": {
         "failed": "{count} Failed",
