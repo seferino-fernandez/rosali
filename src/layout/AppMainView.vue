@@ -1,6 +1,6 @@
 <template>
   <div :class="appMainViewClass">
-    <router-view @context-selected="onContextSelected" @view-logs="onViewLogs" />
+    <router-view @context-selected="onContextSelected" />
   </div>
 </template>
   
@@ -11,10 +11,6 @@ import { useRoute } from 'vue-router';
 export default {
   props: {
     onContextSelected: {
-      type: Function,
-      required: true,
-    },
-    onViewLogs: {
       type: Function,
       required: true,
     },
