@@ -3,7 +3,7 @@
     <AppTopbar :tabs="tabs" />
     <div class="flex flex-grow mt-7">
       <AppSidebar v-show="showSidebar" />
-      <AppMainView @context-selected="addClusterTab" @view-logs="addLogTab" />
+      <AppMainView @context-selected="addClusterTab" />
       <AppDetailsSidebar v-show="showDetailsSidebar" :resource="selectedResource" :hideDetails="hideDetails"
         :showDetailsSidebar="showDetailsSidebar" />
     </div>
@@ -44,16 +44,6 @@ async function addClusterTab(path, label, name, params) {
     tabs.value.push(newTab);
     router.push({ name, params, query: { namespace } });
   }
-}
-
-const addLogTab = async ({ connectionId: connId, pod }) => {
-  connectionId.value = connId;
-  tabs.value.push({
-    type: 'log',
-    label: pod.name,
-    name: "PodLogsView",
-    params: { id: connId, podNamespace: pod.namespace, podName: pod.name },
-  });
 }
 
 async function displayDetails(resource) {

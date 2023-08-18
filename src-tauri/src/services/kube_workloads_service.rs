@@ -1,7 +1,7 @@
 use std::sync::Arc;
 
 use kube::config::Kubeconfig;
-use tauri::{State, Window};
+use tauri::{utils::config::WindowUrl, window::WindowBuilder, State, Window};
 use tokio::sync::Mutex;
 use uuid::Uuid;
 
@@ -165,12 +165,10 @@ pub async fn get_context_overview(
         }
     };
 
-    let workload_status = kube_workloads_client::get_workload_status(
-        &connection.client().clone(),
-        namespace,
-    )
-    .await
-    .unwrap_or_else(|_| WorkloadStatus::new());
+    let workload_status =
+        kube_workloads_client::get_workload_status(&connection.client().clone(), namespace)
+            .await
+            .unwrap_or_else(|_| WorkloadStatus::new());
 
     Ok(Response {
         success: true,
@@ -442,8 +440,7 @@ pub async fn get_replication_controllers(
         }
     };
 
-    match kube_workloads_client::get_replication_controllers(connection.client(), namespace).await
-    {
+    match kube_workloads_client::get_replication_controllers(connection.client(), namespace).await {
         Ok(jobs) => Ok(Response {
             success: true,
             data: Some(jobs),
@@ -453,4 +450,37 @@ pub async fn get_replication_controllers(
             e.to_string(),
         )),
     }
+}
+
+pub async fn view_logs_window(
+    connections: State<'_, Arc<Mutex<ClusterConnections>>>,
+    id: String,
+    pod_name: String,
+    namespace: Option<String>,
+    handle: tauri::AppHandle,
+) {
+    let connections_locked = connections.lock().await;
+    let connection = match connections_locked.get_connection(&id) {
+        Some(conn) => conn,
+        None => {
+            return;
+        }
+    };
+    let namespace_str = namespace.unwrap_or_default();
+    let window_label = format!("{}-{}", &pod_name, &namespace_str);
+    let window_title = format!("{} - {}", &pod_name, &namespace_str);
+    tauri::async_runtime::spawn(async move {
+        WindowBuilder::new(
+            &handle,
+            &window_label,
+            WindowUrl::App(format!("/log-viewer/index.html?id={}&podName={}&podNamespace={}", &id, &pod_name, &namespace_str).into()),
+        )
+        .title(&window_title)
+        .resizable(true)
+        .fullscreen(false)
+        .inner_size(1280.0, 720.0)
+        .min_inner_size(600.0, 600.0)
+        .build()
+        .unwrap();
+    });
 }

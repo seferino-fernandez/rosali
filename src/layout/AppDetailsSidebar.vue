@@ -10,14 +10,14 @@
                     <span class="font-semibold">{{ resource.metadata.name }}</span>
                 </div>
                 <!-- TODO: Implement Actions for Resources -->
-                <!-- <div class="flex"> -->
-                <!-- If resource type is Pods, show a button to view logs -->
-                <!-- <Button v-if="resource.kind === 'Pod'" v-tooltip="$t('actions.view_logs')" icon="pi pi-external-link" -->
-                <!-- class="p-sidebar-icon p-link p-mr-5 mx-1" @click="viewLogs" /> -->
-                <!-- <Button v-tooltip="$t('actions.edit')" icon="pi pi-file-edit" -->
-                <!-- class="p-sidebar-icon p-link p-mr-5 mx-1" /> -->
-                <!-- <Button v-tooltip="$t('actions.delete')" icon="pi pi-trash" class="p-sidebar-icon p-link p-mr-5 mx-1" /> -->
-                <!-- </div> -->
+                <div class="flex">
+                    <!-- If resource type is Pods, show a button to view logs -->
+                    <Button v-if="resource.kind === 'Pod'" v-tooltip="$t('actions.view_logs')" icon="pi pi-external-link"
+                        class="p-sidebar-icon p-link p-mr-5 mx-1" @click="viewLogs" />
+                    <!-- <Button v-tooltip="$t('actions.edit')" icon="pi pi-file-edit"
+                        class="p-sidebar-icon p-link p-mr-5 mx-1" />
+                    <Button v-tooltip="$t('actions.delete')" icon="pi pi-trash" class="p-sidebar-icon p-link p-mr-5 mx-1" /> -->
+                </div>
             </template>
             <TabView>
                 <TabPanel :header="$t('kubernetes.meta.label')">
@@ -68,7 +68,10 @@
 </template>
   
 <script setup>
-import { computed } from 'vue';
+import { ref, computed } from "vue";
+import { useRoute } from "vue-router";
+import { invoke } from "@tauri-apps/api";
+
 import Sidebar from 'primevue/sidebar';
 import Button from 'primevue/button';
 import TabView from 'primevue/tabview';
@@ -89,11 +92,20 @@ const props = defineProps({
         required: true,
     }
 })
+const route = useRoute();
 
 const isVisible = computed(() => props.showDetailsSidebar);
 
-const viewLogs = async () => {
-
+async function viewLogs() {
+    try {
+        await invoke("view_logs_window_command", {
+            id: route.params.id,
+            podName: props.resource.metadata.name,
+            namespace: props.resource.metadata.namespace,
+        });
+    } catch (error) {
+        console.error("Error creating logs window", error);
+    }
 }
 
 </script>

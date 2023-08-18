@@ -108,7 +108,6 @@ const filters = ref({
     namespace: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
 });
 const { t } = useI18n();
-const emit = defineEmits(["view-logs"]);
 const displayDetails = inject('displayDetails');
 
 const speedDialActions = ref([
@@ -135,14 +134,6 @@ async function fetchPods() {
     } catch (error) {
         console.error("Error fetching pods data:", error);
     }
-}
-
-async function viewLogs(e) {
-    showDetails.value = false;
-    emit("view-logs", {
-        connectionId: clusterConnectionId,
-        pod: selectedPod,
-    });
 }
 
 function onRowClick(event) {

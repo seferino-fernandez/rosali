@@ -152,3 +152,17 @@ pub async fn get_replication_controllers_command(
 ) -> Result<Response<Vec<KubeReplicationController>>, ()> {
     kube_workloads_service::get_replication_controllers(connections, id, namespace).await
 }
+
+#[tauri::command]
+pub async fn view_logs_window_command(
+    handle: tauri::AppHandle,
+    connections: State<'_, Arc<Mutex<ClusterConnections>>>,
+    id: String,
+    pod_name: String,
+    namespace: Option<String>,
+) -> Result<bool, ()> {
+    println!("{}", &id);
+    println!("{}", &pod_name);
+    kube_workloads_service::view_logs_window(connections, id, pod_name, namespace, handle).await;
+    Ok(true)
+}
