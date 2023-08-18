@@ -5,10 +5,10 @@ import "primevue/resources/primevue.min.css";
 import "@/styles.css";
 
 import { createApp } from "vue";
+import router from "../src/router";
 import App from "./App.vue";
 import PrimeVue from "primevue/config";
-import i18n from "./i18n";
-import router from "./router";
+import i18n from "../src/i18n";
 import Tooltip from "primevue/tooltip";
 
 const app = createApp(App);

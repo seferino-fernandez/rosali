@@ -56,6 +56,7 @@ fn main() {
             get_nodes_command,
             get_network_policies_command,
             get_endpoints_command,
+            view_logs_window_command,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
