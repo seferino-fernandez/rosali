@@ -460,7 +460,7 @@ pub async fn view_logs_window(
     handle: tauri::AppHandle,
 ) {
     let connections_locked = connections.lock().await;
-    let connection = match connections_locked.get_connection(&id) {
+    let _connection = match connections_locked.get_connection(&id) {
         Some(conn) => conn,
         None => {
             return;
@@ -473,7 +473,13 @@ pub async fn view_logs_window(
         WindowBuilder::new(
             &handle,
             &window_label,
-            WindowUrl::App(format!("/log-viewer/index.html?id={}&podName={}&podNamespace={}", &id, &pod_name, &namespace_str).into()),
+            WindowUrl::App(
+                format!(
+                    "/log-viewer/index.html?id={}&podName={}&podNamespace={}",
+                    &id, &pod_name, &namespace_str
+                )
+                .into(),
+            ),
         )
         .title(&window_title)
         .resizable(true)

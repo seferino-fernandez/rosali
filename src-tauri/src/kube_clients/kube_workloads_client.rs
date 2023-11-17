@@ -13,14 +13,13 @@ use crate::kube_model::statefulsets::KubeStatefulSet;
 use crate::kube_model::workload_status::{
     DeploymentStatus, PodStatus, ReplicaStatus, WorkloadStatus,
 };
-use futures::TryStreamExt;
+use futures::{AsyncBufReadExt, TryStreamExt};
 use k8s_openapi::api::apps::v1::{DaemonSet, Deployment, ReplicaSet, StatefulSet};
 use k8s_openapi::api::batch::v1::{CronJob, Job};
 use k8s_openapi::api::core::v1::{Event, Pod, ReplicationController};
 use kube::api::{ListParams, LogParams};
 use kube::{Api, Client};
 use std::sync::{Arc, Mutex};
-use std::time::Duration;
 use tauri::Window;
 use tokio::task;
 
@@ -178,40 +177,29 @@ pub async fn stream_pod_logs(
     };
 
     let log_params = LogParams {
-        container: None,
         follow: true,
-        previous: false,
+        container: None,
         tail_lines: None,
         timestamps: true,
         since_seconds: None,
         limit_bytes: None,
         pretty: true,
+        previous: true,
     };
 
-    let log_stream = pods_api.log_stream(pod_name, &log_params).await?;
+    let mut log_stream = pods_api.log_stream(pod_name, &log_params).await?.lines();
 
     let window_arc = Arc::new(Mutex::new(window));
 
     task::spawn(async move {
-        log_stream
-            .try_for_each(move |line| {
-                let window = window_arc.clone();
-                async move {
-                    if !line.is_empty() {
-                        let line_str = str::from_utf8(&line).unwrap();
-                        window
-                            .lock()
-                            .unwrap()
-                            .emit("log_line", Some(line_str))
-                            .expect("Failed to emit log line");
-                    }
-                    // Add a small sleep to prevent high CPU usage due to the loop
-                    tokio::time::sleep(Duration::from_millis(50)).await;
-                    Ok(())
-                }
-            })
-            .await
-            .expect("Error processing log stream");
+        while let Some(line) = log_stream.try_next().await.expect("Error reading log line") {
+            let window = window_arc.clone();
+            window
+                .lock()
+                .unwrap()
+                .emit("log_line", Some(&line))
+                .expect("Failed to emit log line");
+        }
     });
 
     Ok(())
