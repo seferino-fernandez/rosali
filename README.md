@@ -1,7 +1,17 @@
-# Rosali App
+# Rosali - a Kubernetes Desktop Client
 
-Rosali App is a Kubernetes management tool built using Vue.js, Vite, PrimeVue, and Tauri. It allows users to connect to their Kubernetes clusters, view and manage the resources in a user-friendly GUI environment.
+**Rosali** is a **Kubernetes** desktop client that allows you to view and manage your clusters and their resources.
 
+![License](https://img.shields.io/badge/license-MIT-green)
+
+# Contents
+
+- [Contents](#contents)
+  - [Prerequisites](#prerequisites)
+  - [Development Setup](#development-setup)
+    - [Installation](#installation)
+  - [Contribution](#contribution)
+  - [License](#license)
 
 ## Prerequisites
 
@@ -9,32 +19,49 @@ This project uses Tauri with Vite. Make sure to have the necessary prerequisites
 
 ## Development Setup
 
-1. Clone the repository:
+### 1. Clone the repository
 
-    ```bash
-    git clone https://github.com/yourusername/rosali-app.git
-    cd rosali-app
-    ```
+Clone the repository and move into the directory.
 
-2. Install dependencies:
+```bash
+git clone https://github.com/seferino-fernandez/rosali-app.git
+cd rosali-app
+```
 
-    Install Node and NPM: https://docs.npmjs.com/downloading-and-installing-node-js-and-npm
+### 2. Install dependencies
 
-    Install the Node dependencies:
-    ```bash
-    npm install
-    ```
-    Install Rust: https://www.rust-lang.org/tools/install
+Install the dependencies by running any of the following commands:
 
+ **npm**:
+```bash
+npm install
+```
+**pnpm**:
+```bash
+pnpm install
+```
 
-3. Start the development server:
+### 3. Start the development server
 
-    ```bash
-    npm run tauri dev
-    ```
+Start the development server by running any of the following commands
+
+**npm**:
+```bash
+npm run tauri dev
+```
+
+**pnpm**:
+```bash
+pnpm run tauri dev
+```
+
+**Cargo**:
+```bash
+cargo tauri dev
+```
 
 ## Contribution
-Contributions to the Rosali App are always welcome. Whether it's a bug report, new feature, correction, or additional documentation, we greatly value your feedback and contributions.
+Contributions to Rosali are always welcome. Whether it's a bug report, new feature, correction, or additional documentation, we greatly value your feedback and contributions.
 
 ## License
-This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE.md) file for details.
+[MIT](./LICENSE.md)
